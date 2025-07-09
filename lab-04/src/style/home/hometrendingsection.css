@@ -1,0 +1,61 @@
+.home-trending-container {
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+}
+
+
+.play_button {
+    border: 2px solid rgb(80, 80, 80);
+    border-radius: 30px; 
+    padding: 10px; 
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+}
+
+.selected_button {
+    border: 2px solid white;
+    border-radius: 9999px; 
+    padding: 0.5rem; 
+    cursor: pointer;
+}
+
+.singular-song-container {
+    display: flex;
+    column-gap: 20px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgb(41, 41, 41);
+    padding-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+}   
+
+.singular-song-container span {
+    color: rgb(104, 104, 104);
+}
+
+.artist-color {
+    color: rgb(150, 150, 150);
+}
+
+.download-button {
+    border: 2px solid rgb(80, 80, 80);
+    border-radius: 20px; 
+    padding: 10px 20px 10px 20px; 
+    cursor: pointer;
+    display: flex;
+    column-gap: 5px;
+    transition: border-color 0.15s ease;
+}
+
+.download-button:hover {
+    border-color: white;
+}
+
+.mood {
+    color: #a190a1;
+    width: 135px;
+    text-overflow: ellipsis;
+    white-space: nowrap;        
+    overflow: hidden;     
+}

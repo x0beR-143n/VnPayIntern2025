@@ -1,0 +1,40 @@
+/* Position types */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed    { position: fixed; }
+.sticky   { position: sticky; }
+.static   { position: static; }
+
+/* Top, Right, Bottom, Left */
+.top-0    { top: 0; }
+.top-1    { top: 4px; }
+.top-2    { top: 8px; }
+.top-4    { top: 16px; }
+.top-auto { top: auto; }
+
+.right-0    { right: 0; }
+.right-1    { right: 4px; }
+.right-2    { right: 8px; }
+.right-4    { right: 16px; }
+.right-auto { right: auto; }
+
+.bottom-0    { bottom: 0; }
+.bottom-1    { bottom: 4px; }
+.bottom-2    { bottom: 8px; }
+.bottom-4    { bottom: 16px; }
+.bottom-auto { bottom: auto; }
+
+.left-0    { left: 0; }
+.left-1    { left: 4px; }
+.left-2    { left: 8px; }
+.left-4    { left: 16px; }
+.left-auto { left: auto; }
+
+/* z-index */
+.z-0  { z-index: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }
+.z-auto { z-index: auto; }

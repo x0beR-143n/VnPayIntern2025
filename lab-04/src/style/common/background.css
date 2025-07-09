@@ -1,0 +1,20 @@
+.bg-white     { background-color: #ffffff; }
+.bg-black     { background-color: #000000; }
+.bg-gray      { background-color: #f3f4f6; }
+.bg-light     { background-color: #f9fafb; }
+.bg-dark      { background-color: #1f2937; }
+.bg-transparent { background-color: transparent; }
+
+
+.bg-success   { background-color: #16a34a; }  /* xanh lá */
+.bg-warning   { background-color: #f59e0b; }  /* vàng */
+.bg-error     { background-color: #dc2626; }  /* đỏ */
+.bg-info      { background-color: #2563eb; }  /* xanh dương */
+
+.bg-gradient-black-down {
+  background-image: linear-gradient(to bottom, #000000, transparent);
+}
+
+.bg-black-transparent {
+  background-color: rgba(0, 0, 0, 0.5);
+}

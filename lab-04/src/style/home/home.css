@@ -1,0 +1,35 @@
+.home-social-media-intro {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    column-gap: 60px;
+    row-gap: 30px;
+    flex-wrap: wrap;
+}
+
+.home-project-n-brand-container {
+    margin-top: 100px;
+    display: flex;
+    column-gap: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-project-introduction {
+    width: 20%;
+}
+
+.home-project-brand-list p{
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    margin-bottom: 10px;
+    font-weight: 100;
+}
+
+.home-brand-project-container {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+}
