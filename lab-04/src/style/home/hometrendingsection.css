@@ -33,11 +33,18 @@
 .soundwave-container {
     width: 30%;
     height: 50px;
+    display: block;
 }
 
 .soundwave-container img{
     width: 100%;
     height: 100%;
+}
+
+@media (max-width: 980px) {
+  .soundwave-container {
+    display: none;
+  }
 }
 
 .singular-song-container span {
