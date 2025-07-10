@@ -1,0 +1,28 @@
+footer {
+    margin-top: 50px;
+    padding-top: 50px;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    padding-bottom: 100px;
+}
+
+.footer-item-container {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 80px;
+    justify-content: center;
+    margin: 0 50px 0 50px;
+}
+
+.footer-social-media-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
+    margin: 30px 0 80px 0;
+}
+
+.footer-description {
+    font-size: 12px;
+    text-align: center;
+}

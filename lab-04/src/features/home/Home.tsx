@@ -12,6 +12,7 @@ import HomeDescriptionItem from "./HomeDescriptionItem";
 import { FaCheck } from "react-icons/fa6";
 import HomePlaylistSelection from "./HomePlaylistSelection";
 import HomeTrendingSection from "./HomeTrendingSection";
+import Footer from "../../components/Footer/Footer";
 
 export default function Home() {
   const categories = [
@@ -46,8 +47,8 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-10" />
           
           <div className="absolute-center text-center w-full flex-col">
-            <h2 className="font-bold text-5xl mb-5">Premium Tracks and Sound Effects, Simple Licenses</h2>
-            <p className="font-medium mb-5">Unlimited downloads from our library of studio-quality audio for your videos, podcasts, games, and apps for one simple low price.</p>
+            <h2 className="font-bold mb-5 xl:text-5xl lg:text-4xl md:text-2xl sm:text-xl">Premium Tracks and Sound Effects, Simple Licenses</h2>
+            <p className="font-medium mb-5 xl:text-md lg:text-sm sm:text-xs">Unlimited downloads from our library of studio-quality audio for your videos, podcasts, games, and apps for one simple low price.</p>
             <a href="https://lucide.dev/icons/search" className="underline text-yellow-500 flex items-center justify-center gap-x-1 font-semibold mb-5">Get Unlimited Access <ArrowRight /></a>
             
             <form action="" className="flex items-center justify-center">
@@ -60,10 +61,10 @@ export default function Home() {
           </div>
         </div>
 
-        <div className=" bg-gradient-black-down w-full h-49 pt-40">
+        <div className=" bg-gradient-black-down w-full text-by-theme  pt-40">
           <div className="">
-            <p className="text-by-theme text-4xl font-semibold text-center font-1">Music and sound effects for any platform</p>
-            <p className="font-light text-center mt-3 text-lg">Providing royalty-free music for over 4.2M creative projects since 2015.</p>
+            <p className="font-semibold text-center font-1 md:text-3xl lg:text-4xl sm:text-2xl ">Music and sound effects for any platform</p>
+            <p className="font-light text-center mt-3 md:text-lg ">Providing royalty-free music for over 4.2M creative projects since 2015.</p>
             <div className="home-social-media-intro">
               <HomeDescriptionItem img_URL={"/img/podcast.jpg"} name={"Podcast"}/>
               <HomeDescriptionItem img_URL={"/img/youtube.jpg"} name={"Youtube"}/>
@@ -74,8 +75,8 @@ export default function Home() {
 
           <div className="home-project-n-brand-container">
             <div className="home-project-introduction">
-                <p className="font-semibold text-4xl mb-10 font-1">Easy listening for every project</p>
-                <p className="font-light text-md">Simple, substantial licenses with all rights included for every type of project</p>
+                <p className="font-semibold text-4xl mb-10 font-1 md:text-xl lg:text-4xl sm:text-md">Easy listening for every project</p>
+                <p className="font-light sm:text-xss md:text-md">Simple, substantial licenses with all rights included for every type of project</p>
                 <button className="primary-button mt-10">See our licenses</button>
             </div>
             <div className="home-brand-project-container">
@@ -101,9 +102,10 @@ export default function Home() {
           </div>
           
           <HomePlaylistSelection />
-          <HomeTrendingSection />
-
+          
         </div>
+        <HomeTrendingSection />
+        <Footer />
     </>
   );
 }

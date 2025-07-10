@@ -12,7 +12,7 @@
 .bg-info      { background-color: #2563eb; }  /* xanh dương */
 
 .bg-gradient-black-down {
-  background-image: linear-gradient(to bottom, #000000, transparent);
+  background-image: linear-gradient(to bottom, var(--color-bg), var(--color-bg-transparent));
 }
 
 .bg-black-transparent {

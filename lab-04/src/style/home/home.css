@@ -14,10 +14,13 @@
     column-gap: 50px;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    row-gap: 20px;
 }
 
 .home-project-introduction {
     width: 20%;
+    min-width: 150px;
 }
 
 .home-project-brand-list p{

@@ -1,16 +1,29 @@
 .home-playlist-selection-container {
     margin-top: 100px;
+    padding-bottom: 50px;
 }
 .home-playlist-selection-container p {
     margin-bottom: 10px;
 }
 
 .playlist_options_button_container {
+    margin: 20px 0 40px 0;
+    overflow-x: auto;     
+    white-space: nowrap;
+    scrollbar-width: none;     /* Firefox */
+     -ms-overflow-style: none;  /* IE & Edge */
+}
+
+.playlist_options_button_container::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
+
+.scroll-container {
     display: flex;
     column-gap: 20px;
     align-items: center;
     justify-content: center;
-    margin: 20px 0 40px 0;
+    min-width: 800px; 
 }
 
 .playlist_options_button {
@@ -31,10 +44,11 @@
     display: flex;
     align-items: center;
     column-gap: 5px;
+    color: white;
 }
 
 .playlist_options_button_container button:hover {
-    border-color: white;
+    border-color: var(--color-button-hover);
 }
 
 .playlist-container {

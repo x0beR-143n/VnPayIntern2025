@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import "../../style/header.css"
 import HeaderItem from "./HeaderItem";
-import {Music, LayoutPanelTop, Waves, ListMusic, Activity, ShoppingCart, User} from 'lucide-react'
+import {Music, LayoutPanelTop, Waves, ListMusic, Activity, ShoppingCart, User, Menu, ArrowRight} from 'lucide-react'
+import DropDown from "../Layout/Dropdown";
 
 function Header() {
     const collections = [
@@ -59,8 +60,10 @@ function Header() {
         };
     }, [])
 
+    const [isOpen, setOpen] = useState(false);
+
     return (
-        <header className= {`fixed top-0 w-full z-50 transition-colors duration-300 ${isScrolled ? "bg-zinc-900 shadow-md" : "bg-transparent"}`}>
+        <header className= {`fixed top-0 w-full z-50 transition-colors text-by-theme duration-300 ${isScrolled ? "bg-header-scrolled " : "bg-heder-not-scroll"}`}>
             <div className="px-10 py-3 flex justify-between items-center">
                 <div className="flex items-center gap-x-2 cursor-pointer">
                     <img src="/header/sound1.png" alt="Music Wave" className="h-14 w-14"/>
@@ -69,18 +72,36 @@ function Header() {
                         <p className="sub-title mt-[-8px] ml-8">by shutterSock</p>
                     </div>
                 </div>
-                <nav className="flex gap-x-5 items-center">
+                <nav className="hidden lg:flex gap-x-5 items-center">
                     <HeaderItem icon={Music} text={"Music"} show_hover_content={false} collections={collections} list={[]} type={""}/>
                     <HeaderItem icon={LayoutPanelTop} text={"Genres"} show_hover_content={true} collections={genresCollection} list={genres} type={"Genres"}/>
                     <HeaderItem icon={Waves} text={"Mood"} show_hover_content={true} collections={moodCollection} list={mood} type={"Moods"}/>
                     <HeaderItem icon={ListMusic} text={"Playlist"} show_hover_content={true} collections={collections} list={playlist} type={"Playlist"}/>
                     <HeaderItem icon={Activity} text={"SFX"} show_hover_content={false} collections={collections} list={[]} type={""}/>
                 </nav>
-                <div className="flex gap-x-3 items-center">
-                    <p className="text-zinc-400 font-medium text-sm">Pricing</p>
+                <div className="flex gap-x-3 items-center ">
+                     <div className="relative block lg:hidden">
+                        <Menu
+                            className={`block cursor-pointer ${
+                                isOpen ? "text-yellow-800" : "text-zinc-400"
+                            }`}
+                            onClick={() => setOpen(!isOpen)}
+                        />
+                        {isOpen && (
+                            <div className="absolute left-1/2 top-full mt-2 -translate-x-1/2 bg-zinc-900 flex flex-col gap-y-5 rounded-lg py-5 pr-10 pl-2">
+                                <p className="flex items-center gap-x-2 cursor-pointer hover:text-yellow-500"><Music />Music <ArrowRight /></p>
+                                <p className="flex items-center gap-x-2 cursor-pointer hover:text-yellow-500"><LayoutPanelTop />Genres <ArrowRight /></p>
+                                <p className="flex items-center gap-x-2 cursor-pointer hover:text-yellow-500"><Waves />Mood <ArrowRight /></p>
+                                <p className="flex items-center gap-x-2 cursor-pointer hover:text-yellow-500"><ListMusic />Playlist <ArrowRight /></p>
+                                <p className="flex items-center gap-x-2 cursor-pointer hover:text-yellow-500"><Activity />SFX <ArrowRight /></p>
+                            </div>
+                        )}
+                    </div>
+                    <p className=" font-medium text-sm">Pricing</p>   
                     <button className="primary-button">Subscribe</button>
-                    <ShoppingCart className="text-zinc-400"/>
-                    <User className="text-zinc-400"/>
+                    <ShoppingCart className=""/>
+                    <User className=""/>
+                    
                 </div>
             </div>
         </header>

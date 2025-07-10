@@ -53,17 +53,19 @@ export default function HomePlaylistSelection() {
             <p className="font-1 text-4xl text-center">Curated playlist to fit any vibes</p>
             <p className="text-lg font-light text-center">Discover our customized collections to find the track for whatever you're working on.</p>
             <div className="playlist_options_button_container">
-                {categories.map((cate, index) => (
-                    (selectedButton === index ? 
-                        <button onClick={() => cancelSelect()} className = "playlist_options_button_selected">
-                            {cate} <X size={15}/>
-                        </button>
-                    :
-                        <button onClick={() => selectPlaylist(index)} className = "playlist_options_button">
-                            {cate}
-                        </button>
-                    ) 
-                ))}
+                <div className="scroll-container">
+                    {categories.map((cate, index) => (
+                        (selectedButton === index ? 
+                            <button onClick={() => cancelSelect()} className = "playlist_options_button_selected">
+                                {cate} <X size={15}/>
+                            </button>
+                        :
+                            <button onClick={() => selectPlaylist(index)} className = "playlist_options_button">
+                                {cate}
+                            </button>
+                        )   
+                    ))}
+                </div>
             </div>
             <div className="playlist-container">
                 <AnimatePresence mode="wait">

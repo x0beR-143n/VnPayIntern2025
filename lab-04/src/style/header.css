@@ -10,3 +10,14 @@ h1 {
   font-weight: 400;
   font-style: normal;
 }
+
+.bg-header-scrolled {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: var(--color-header-scroll);
+}
+
+.bg-heder-not-scroll {
+  background-color: transparent;
+  color: white;
+}

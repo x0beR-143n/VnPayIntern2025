@@ -4,11 +4,11 @@ import { Play, EllipsisVertical, Download } from "lucide-react";
 
 export default function HomeTrendingSection() {
     const songs = [
-        { title: "Fargone", url: "/songs/fargone", genre: "Ambient,Soundscape", artist: "Eli Morrison", mood: "Dreamy" },
-        { title: "Hypernova", url: "/songs/hypernova", genre: "Futuristic,Electronic", artist: "Nova Blaze", mood: "Energetic" },
-        { title: "Memory", url: "/songs/memory", genre: "Lo-fi, Chill, Beats", artist: "Chill Theory", mood: "Nostalgic" },
-        { title: "Overjoyed", url: "/songs/overjoyed", genre: "Indie, Pop, Ballad", artist: "Sera Day", mood: "Uplifting" },
-        { title: "Street", url: "/songs/street", genre: "Urban, Hip-Hop, Groove", artist: "DJ Nomad", mood: "Bold" }
+        { title: "Fargone", url: "/songs/fargone", genre: "Ambient,Soundscape", artist: "Eli Morrison", mood: "Dreamy" , soundwave_url: '/img/soundwave/fargone.png'},
+        { title: "Hypernova", url: "/songs/hypernova", genre: "Futuristic,Electronic", artist: "Nova Blaze", mood: "Energetic", soundwave_url: '/img/soundwave/hypernova.png' },
+        { title: "Memory", url: "/songs/memory", genre: "Lo-fi, Chill, Beats", artist: "Chill Theory", mood: "Nostalgic" , soundwave_url: '/img/soundwave/memory.png'},
+        { title: "Overjoyed", url: "/songs/overjoyed", genre: "Indie, Pop, Ballad", artist: "Sera Day", mood: "Uplifting", soundwave_url: '/img/soundwave/overjoyed.png' },
+        { title: "Street", url: "/songs/street", genre: "Urban, Hip-Hop, Groove", artist: "DJ Nomad", mood: "Bold", soundwave_url: '/img/soundwave/street.png' }
     ];
 
     return (
@@ -25,6 +25,9 @@ export default function HomeTrendingSection() {
                                 <p className='text-sm artist-color'><span className='font-light'>by </span>{song.artist}</p>
                             </div>
                         </div>
+                        <div className='soundwave-container'>
+                            <img src={song.soundwave_url} alt="" />
+                        </div>
                         <div>
                             <p className='font-3 mood'>{song.genre}</p>
                             <p className='font-3 mood'>{song.mood}</p>
@@ -36,4 +39,4 @@ export default function HomeTrendingSection() {
             </div>
         </div>
     )
-}
+}   

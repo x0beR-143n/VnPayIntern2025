@@ -27,6 +27,21 @@ body {
   font-weight: 600;
   font-style: normal;
   font-variation-settings:"wdth" 100;
+  color: white;
+}
+
+.secondary-button {
+    border: 2px solid rgb(80, 80, 80);
+    border-radius: 20px; 
+    padding: 10px 20px 10px 20px; 
+    cursor: pointer;
+    display: flex;
+    column-gap: 5px;
+    transition: border-color 0.15s ease;
+}
+
+.secondary-button:hover {
+    border-color: white;
 }
 
 .absolute-center {

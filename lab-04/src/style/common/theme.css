@@ -9,6 +9,12 @@
 
   --color-border: #e5e7eb;
   --color-muted: #9ca3af;
+
+  --color-bg-transparent: rgb(255, 255, 255 );
+  --color-button-hover: rgb(231, 221, 221) ; 
+
+  --color-header-scroll: oklch(70.5% 0.015 286.067);
+
 }
 
 /* Dark theme */
@@ -22,4 +28,9 @@
 
   --color-border: #374151;
   --color-muted: #6b7280;
+
+  --color-bg-transparent: rgba(0, 0, 0, 0);
+  --color-button-hover: white;
+
+  --color-header-scroll: oklch(21% 0.006 285.885);
 }
