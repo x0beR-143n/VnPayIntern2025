@@ -18,3 +18,7 @@
 .bg-black-transparent {
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+.bg-by-theme {
+  background-color: var(--color-bg);
+}

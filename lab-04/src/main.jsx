@@ -11,9 +11,14 @@ import './style/common/width-height.css'
 import './style/common/background.css'
 import './style/common/image.css'
 import App from './App.jsx'
+import { Provider } from 'react-redux';
+import { store } from './redux/store.js'
+import React from 'react'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>  
-    <App />
-  </StrictMode>,
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
 )

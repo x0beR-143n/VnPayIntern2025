@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "../../style/header.css"
 import HeaderItem from "./HeaderItem";
 import {Music, LayoutPanelTop, Waves, ListMusic, Activity, ShoppingCart, User, Menu, ArrowRight} from 'lucide-react'
-import DropDown from "../Layout/Dropdown";
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
     const collections = [
@@ -62,6 +62,12 @@ function Header() {
 
     const [isOpen, setOpen] = useState(false);
 
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        navigate('/login');
+    };
+
     return (
         <header className= {`fixed top-0 w-full z-50 transition-colors text-by-theme duration-300 ${isScrolled ? "bg-header-scrolled " : "bg-heder-not-scroll"}`}>
             <div className="px-10 py-3 flex justify-between items-center">
@@ -100,7 +106,7 @@ function Header() {
                     <p className=" font-medium text-sm">Pricing</p>   
                     <button className="primary-button">Subscribe</button>
                     <ShoppingCart className=""/>
-                    <User className=""/>
+                    <User className="cursor-pointer" onClick={handleLogin}/>
                     
                 </div>
             </div>

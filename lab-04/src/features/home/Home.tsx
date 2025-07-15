@@ -61,7 +61,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className=" bg-gradient-black-down w-full text-by-theme  pt-40">
+        <div className=" bg-gradient-black-down w-full text-by-theme pt-40">
           <div className="">
             <p className="font-semibold text-center font-1 md:text-3xl lg:text-4xl sm:text-2xl ">Music and sound effects for any platform</p>
             <p className="font-light text-center mt-3 md:text-lg ">Providing royalty-free music for over 4.2M creative projects since 2015.</p>

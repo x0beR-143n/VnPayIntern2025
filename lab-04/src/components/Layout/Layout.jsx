@@ -6,7 +6,7 @@ export default function Layout() {
     return (
         <>
             <Header />
-            <main className="min-h-screen p-4">
+            <main className="">
                 <Outlet />
             </main>
             <Footer />
