@@ -12,13 +12,18 @@ import './style/common/background.css'
 import './style/common/image.css'
 import App from './App.jsx'
 import { Provider } from 'react-redux';
-import { store } from './redux/store.js'
+import { store, persistor } from './redux/store.js'
 import React from 'react'
+import { PersistGate } from 'redux-persist/integration/react';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      {/* PersistGate sẽ trì hoãn render UI cho đến khi trạng thái được khôi phục từ storage */}
+      {/* loading={null} có nghĩa là không hiển thị gì trong khi chờ đợi */}
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 )

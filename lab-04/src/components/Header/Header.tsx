@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from "react";
 import "../../style/header.css"
 import HeaderItem from "./HeaderItem";
-import {Music, LayoutPanelTop, Waves, ListMusic, Activity, ShoppingCart, User, Menu, ArrowRight} from 'lucide-react'
+import {Music, LayoutPanelTop, Waves, ListMusic, Activity, ShoppingCart, User, Menu, ArrowRight, ArrowDown, ArrowUp} from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
 
 function Header() {
     const collections = [
@@ -46,6 +49,11 @@ function Header() {
     ];
 
     const [isScrolled, setScroll] = useState(false);
+    const [isOpenProfile, setOpenProfile] = useState(false);
+    const dispatch = useDispatch();
+    const authState = useSelector(state => state.auth);
+
+    const isLoggedIn = authState.isLoggedIn
 
     useEffect(() => {
         const handleScroll = () => {
@@ -67,6 +75,18 @@ function Header() {
     const handleLogin = () => {
         navigate('/login');
     };
+
+    const toggleOpenProfile = () => {
+        setOpenProfile(!isOpenProfile);
+    }
+
+    const handleLogout = () => {
+        dispatch(logout()); // Đây là nơi bạn dispatch action logout
+    };
+
+    const handleTokenView = () => {
+        navigate('/token_usage')
+    }
 
     return (
         <header className= {`fixed top-0 w-full z-50 transition-colors text-by-theme duration-300 ${isScrolled ? "bg-header-scrolled " : "bg-heder-not-scroll"}`}>
@@ -103,11 +123,38 @@ function Header() {
                             </div>
                         )}
                     </div>
-                    <p className=" font-medium text-sm">Pricing</p>   
+                    {isLoggedIn ? ( 
+                        <div className="relative">
+                            {isOpenProfile ? (
+                                <div className="cursor-pointer flex items-center text-yellow-600" onClick={toggleOpenProfile} > 
+                                    <User />
+                                    <ArrowUp />
+                                </div>
+                            ) : (
+                                <div className="cursor-pointer flex items-center hover:text-yellow-600" onClick={toggleOpenProfile} > 
+                                    <User />
+                                    <ArrowDown />
+                                </div>
+                            )}
+                            {isOpenProfile && (
+                                <div className="mt-3 p-4 bg-zinc-800 rounded-xl absolute left-1/2 -translate-x-1/2 flex flex-col gap-y-5 w-max">
+                                    <div className="flex gap-x-2">
+                                        <img src="/img/avatar.png" alt=""  className="w-20 h-20"/>
+                                        <div>
+                                            <p className="font-1">{authState.username}</p>
+                                            <p className="font-3 text-sm text-gray-400">{authState.email}</p>
+                                        </div>
+                                    </div>
+                                    <button className="primary-button cursor-pointer" onClick={handleTokenView}>View your jwt token</button>
+                                    <button className="primary-button cursor-pointer" onClick={handleLogout}>Logout</button>
+                                </div>
+                            )}
+                        </div> 
+                    ) : ( 
+                        <User className="cursor-pointer" onClick={handleLogin} /> 
+                    )}
                     <button className="primary-button">Subscribe</button>
-                    <ShoppingCart className=""/>
-                    <User className="cursor-pointer" onClick={handleLogin}/>
-                    
+                    <ShoppingCart className=""/>          
                 </div>
             </div>
         </header>

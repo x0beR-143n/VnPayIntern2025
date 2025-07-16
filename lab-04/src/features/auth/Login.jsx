@@ -1,23 +1,30 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import '../../style/Login/login.css'
 import { X } from 'lucide-react';  
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { SiApple } from "react-icons/si";
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom'
+import { loginRequest } from '../../redux/slices/authSlice';
 
 export default function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        dispatch(login({ username, email }));
-        console.log("Login thành công");
-        navigate('/');
+    const authState = useSelector(state => state.auth);
+
+    useEffect(() => {
+        if (authState.isLoggedIn) {
+            navigate('/');
+        }
+    }, [authState.isLoggedIn, navigate]);
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        dispatch(loginRequest({ email, password }));
     };
 
     return (
@@ -42,6 +49,11 @@ export default function Login() {
                 <h2 className="text-center mt-20 text-3xl font-1 mb-18">Login or create your account</h2>
 
                 <div className="w-8/10 m-auto flex flex-col gap-y-5">
+                    {authState.error ? (
+                        <p className="text-red-500 text-sm">*{authState.error}</p>
+                    ) : (
+                        <p></p>
+                    )}
                     <div className="">
                         <label htmlFor="email" className="block text-gray-700 mb-2 font-medium text-xs">
                             Email
@@ -56,30 +68,20 @@ export default function Login() {
 
                     <div className="">
                         <label htmlFor="email" className="block text-gray-700 mb-2 font-medium text-xs">
-                            Username
-                        </label>
-                        <input
-                            id="name"
-                            type="text"
-                            className="w-full border-b-2 border-gray-300 focus:outline-none focus:border-yellow-500 px-1 py-2 placeholder-gray-500"
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </div>
-
-                    <div className="">
-                        <label htmlFor="password" className="text-gray-700 mb-2 font-medium text-xs block">
                             Password
                         </label>
                         <input
-                            id="password"
+                            id="name"
                             type="password"
                             className="w-full border-b-2 border-gray-300 focus:outline-none focus:border-yellow-500 px-1 py-2 placeholder-gray-500"
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button className="mt-5 bg-red-900" onClick={handleLogin}>Get started</button>
-                    <button > <FcGoogle size={20}/> Continue with Google</button>
-                    <button> <FaFacebook size={20}/> Continue with Facebook</button>
-                    <button> <SiApple size={20}/> Continue with Apple</button>
+
+                    <button className="mt-5 bg-red-900 login-button" onClick={handleLogin}>Get started</button>
+                    <button className="login-button"> <FcGoogle size={20}/> Continue with Google</button>
+                    <button className="login-button"> <FaFacebook size={20}/> Continue with Facebook</button>
+                    <button className="login-button"> <SiApple size={20}/> Continue with Apple</button>
                 </div>
             </div>
         </div>

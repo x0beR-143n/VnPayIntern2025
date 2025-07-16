@@ -55,8 +55,9 @@ export default function Home() {
               <input type="text" name="search" id="search" placeholder="Find my track by searching genre, mood, instrument..."
               className="w-1/2 py-3 pl-6 pr-12 rounded-l-full bg-white/1 placeholder:text-gray-300 backdrop-blur-md border-[2px] border-white border-r-[0] focus:outline-none"
               />
-              <button name="submit" title="submit" className="p-3 rounded-r-full border-[2px] border-white border-l-[0]"
-              ><Search/></button>
+              <button name="submit" title="submit" className=" p-3 rounded-r-full border-[2px] border-white bg-yellow-700">
+                <Search/>
+              </button>
             </form>
           </div>
         </div>

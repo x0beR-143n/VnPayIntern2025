@@ -3,6 +3,7 @@ import Layout from '../components/Layout/Layout';
 import Home from '../features/home/Home';
 import About from '../features/about/About';
 import Login from '../features/auth/Login';
+import TokenUsage from '../features/token_usage/TokenUsage';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: 'about', element: <About /> },
+      { path: 'token_usage', element: <TokenUsage /> },
       // thêm route khác ở đây
     ],
   }
