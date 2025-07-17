@@ -48,7 +48,7 @@ app.post('/login', (req, res) => {
             email: user.email,
             username: user.name
         });
-    }, 2000);
+    }, 5000);
 });
 
 

@@ -4,11 +4,13 @@ import { X } from "lucide-react";
 import CollectionDisplay from "./CollectionDisplay";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
-
+import { useTranslation } from "react-i18next";
 
 export default function HomePlaylistSelection() {
+    const { t } = useTranslation();
+
     const [selectedButton, setSelectedButton] = useState(-1);
-    const categories = ["Artist", "Genres", "Moods", "Projects", "Seasonal", "Staff Picks"];
+    const categories = ["artist", "genre", "mood", "project", "seasonal", "staffpick"];
     const artists = [{name:"Discover: Mood Craft",trackCount:18,description:"Create Fund Grant Winner",imgUrl:"/img/playlist_bg_1.jpg"},{name:"Discover: Tim Datailor",trackCount:16,description:"Create Fund Grant Winner",imgUrl:"/img/playlist_bg_2.jpg"},{name:"Discover: Sunset Fluid",trackCount:15,description:"Create Fund Grant Winner",imgUrl:"/img/playlist_bg_3.jpg"},{name:"Discover: Lowkeyd",trackCount:15,description:"Create Fund Grant Winner",imgUrl:"/img/playlist_bg_4.jpg"},{name:"Discover: Taizo Audio",trackCount:40,description:"Cinematic Orchestral Music",imgUrl:"/img/playlist_bg_5.jpg"},{name:"Discover: Grace Mesa",trackCount:40,description:"Gritty Indie Pop",imgUrl:"/img/playlist_bg_6.jpg"}];
     const genres = [{name:"Discover: Synth Rush",trackCount:22,description:"Futuristic Electro Vibes",imgUrl:"/img/playlist_bg_7.jpg"},{name:"Discover: Jazz Motion",trackCount:14,description:"Smooth Jazz Tracks",imgUrl:"/img/playlist_bg_8.jpg"},{name:"Discover: Dark Tension",trackCount:30,description:"Dark Ambient Soundscapes",imgUrl:"/img/playlist_bg_9.jpg"},{name:"Discover: Happy Beats",trackCount:19,description:"Uplifting Feel-Good Music",imgUrl:"/img/playlist_bg_10.jpg"},{name:"Discover: Latin Grooves",trackCount:25,description:"Energetic Latin Rhythms",imgUrl:"/img/playlist_bg_11.jpg"},{name:"Discover: Vintage Rock",trackCount:35,description:"Old School Rock Vibes",imgUrl:"/img/playlist_bg_12.jpg"}];
     const moods = [{name:"Discover: Chill Time",trackCount:20,description:"Relax & Unwind",imgUrl:"/img/playlist_bg_13.jpg"},{name:"Discover: Hype Energy",trackCount:28,description:"Boost Your Mood",imgUrl:"/img/playlist_bg_14.jpg"},{name:"Discover: Calm Piano",trackCount:17,description:"Peaceful Piano Tracks",imgUrl:"/img/playlist_bg_15.jpg"},{name:"Discover: Happy Vibes",trackCount:30,description:"Positive & Bright",imgUrl:"/img/playlist_bg_16.jpg"},{name:"Discover: Dramatic Pulse",trackCount:24,description:"Tension and Emotion",imgUrl:"/img/playlist_bg_1.jpg"},{name:"Discover: Night Drive",trackCount:27,description:"Synthwave and Retro",imgUrl:"/img/playlist_bg_2.jpg"}];
@@ -50,18 +52,18 @@ export default function HomePlaylistSelection() {
 
     return (
         <div className="home-playlist-selection-container">
-            <p className="font-1 text-4xl text-center">Curated playlist to fit any vibes</p>
-            <p className="text-lg font-light text-center">Discover our customized collections to find the track for whatever you're working on.</p>
+            <p className="font-1 text-4xl text-center">{t('playlist_title')}</p>
+            <p className="text-lg font-light text-center">{t('playlist_description')}</p>
             <div className="playlist_options_button_container">
                 <div className="scroll-container">
                     {categories.map((cate, index) => (
                         (selectedButton === index ? 
                             <button onClick={() => cancelSelect()} className = "playlist_options_button_selected">
-                                {cate} <X size={15}/>
+                                {t(cate)} <X size={15}/>
                             </button>
                         :
                             <button onClick={() => selectPlaylist(index)} className = "playlist_options_button">
-                                {cate}
+                                {t(cate)}
                             </button>
                         )   
                     ))}

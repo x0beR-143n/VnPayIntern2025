@@ -12,22 +12,22 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // Mặc định là localStorage cho web
 
-import authReducer from '../redux/slices/authSlice';
+import authReducer from './slices/authSlice';
+import languageReducer from  './slices/languageSlice'
 import rootSaga from './sagas'; // Import root saga của bạn
-
 
 // 1. Cấu hình Redux Persist
 const persistConfig = {
   key: 'root', // Key cho localStorage, có thể là bất cứ gì
   storage,     // Cơ chế lưu trữ, ở đây là localStorage
-  whitelist: ['auth'], // Chỉ lưu trữ slice 'auth'. Các slice khác sẽ không được persist.
+  whitelist: ['auth', 'language'], // Chỉ lưu trữ slice 'auth'. Các slice khác sẽ không được persist.
   // blacklist: ['someOtherSlice'] // Nếu bạn muốn loại trừ một slice nào đó
 };
 
 // 2. Kết hợp các reducers
 const rootReducer = combineReducers({
   auth: authReducer,
-  // Thêm các reducers khác của bạn vào đây
+  language: languageReducer,
 });
 
 // 3. Bọc rootReducer với persistReducer

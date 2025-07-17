@@ -5,7 +5,8 @@ import {Music, LayoutPanelTop, Waves, ListMusic, Activity, ShoppingCart, User, M
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
-import { logout } from "../../redux/slices/authSlice";
+import { logoutRequest } from "../../redux/slices/authSlice";
+import LogoutLoading from '../../components/Layout/LoadingLogout';
 
 function Header() {
     const collections = [
@@ -81,11 +82,17 @@ function Header() {
     }
 
     const handleLogout = () => {
-        dispatch(logout()); // Đây là nơi bạn dispatch action logout
+        dispatch(logoutRequest()); // Đây là nơi bạn dispatch action logout
     };
 
     const handleTokenView = () => {
         navigate('/token_usage')
+    }
+
+    if(authState.isLoading) {
+        return (
+            <LogoutLoading />
+        )
     }
 
     return (
@@ -99,11 +106,11 @@ function Header() {
                     </div>
                 </div>
                 <nav className="hidden lg:flex gap-x-5 items-center">
-                    <HeaderItem icon={Music} text={"Music"} show_hover_content={false} collections={collections} list={[]} type={""}/>
-                    <HeaderItem icon={LayoutPanelTop} text={"Genres"} show_hover_content={true} collections={genresCollection} list={genres} type={"Genres"}/>
-                    <HeaderItem icon={Waves} text={"Mood"} show_hover_content={true} collections={moodCollection} list={mood} type={"Moods"}/>
-                    <HeaderItem icon={ListMusic} text={"Playlist"} show_hover_content={true} collections={collections} list={playlist} type={"Playlist"}/>
-                    <HeaderItem icon={Activity} text={"SFX"} show_hover_content={false} collections={collections} list={[]} type={""}/>
+                    <HeaderItem icon={Music} text={"music"} show_hover_content={false} collections={collections} list={[]} type={""}/>
+                    <HeaderItem icon={LayoutPanelTop} text={"genre"} show_hover_content={true} collections={genresCollection} list={genres} type={"Genres"}/>
+                    <HeaderItem icon={Waves} text={"mood"} show_hover_content={true} collections={moodCollection} list={mood} type={"Moods"}/>
+                    <HeaderItem icon={ListMusic} text={"playlist"} show_hover_content={true} collections={collections} list={playlist} type={"Playlist"}/>
+                    <HeaderItem icon={Activity} text={"sfx"} show_hover_content={false} collections={collections} list={[]} type={""}/>
                 </nav>
                 <div className="flex gap-x-3 items-center ">
                      <div className="relative block lg:hidden">

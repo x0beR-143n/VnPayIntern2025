@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store.js'
 import React from 'react'
 import { PersistGate } from 'redux-persist/integration/react';
+import './i18n'; // import để i18n hoạt động
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

@@ -7,6 +7,7 @@ import { SiApple } from "react-icons/si";
 import { useDispatch, useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 import { loginRequest } from '../../redux/slices/authSlice';
+import LoginLoading from '../../components/Layout/LoadingLogin'
 
 export default function Login() {
     const dispatch = useDispatch();
@@ -22,10 +23,19 @@ export default function Login() {
         }
     }, [authState.isLoggedIn, navigate]);
 
+    if(authState.isLoading) {
+        return <LoginLoading />
+    }
+
     const handleLogin = (e) => {
         e.preventDefault();
         dispatch(loginRequest({ email, password }));
     };
+
+    const handleX = (e) => {
+        e.preventDefault();
+        navigate('/');
+    }
 
     return (
         <div className="w-full h-screen flex ">
@@ -41,8 +51,8 @@ export default function Login() {
                             <p className="sub-title mt-[-8px] ml-8">by shutterSock</p>
                         </div>
                     </div>
-                    <div className="">
-                        <X className=""/>
+                    <div className="cursor-pointer">
+                        <X className="" onClick={handleX}/>
                     </div>
                 </div>
                 

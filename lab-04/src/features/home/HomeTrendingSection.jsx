@@ -1,8 +1,10 @@
 import '../../style/home/hometrendingsection.css'
 import React from 'react'
 import { Play, EllipsisVertical, Download } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 export default function HomeTrendingSection() {
+    const {t} = useTranslation();
     const songs = [
         { title: "Fargone", url: "/songs/fargone", genre: "Ambient,Soundscape", artist: "Eli Morrison", mood: "Dreamy" , soundwave_url: '/img/soundwave/fargone.png'},
         { title: "Hypernova", url: "/songs/hypernova", genre: "Futuristic,Electronic", artist: "Nova Blaze", mood: "Energetic", soundwave_url: '/img/soundwave/hypernova.png' },
@@ -13,8 +15,8 @@ export default function HomeTrendingSection() {
 
     return (
         <div className='home-trending-container'>
-            <p className='text-4xl font-1 '>What's Trending right now ?</p>
-            <p className='text-lg mt-5'>Check out what's popular in our library.</p>
+            <p className='text-4xl font-1 '>{t('trending_title')}</p>
+            <p className='text-lg mt-5'>{t('trending_description')}</p>
             <div className='mt-10'>
                 { songs.map((song) => (
                     <div className='singular-song-container'>

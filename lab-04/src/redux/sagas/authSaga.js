@@ -1,6 +1,6 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, delay, all } from 'redux-saga/effects';
 import authService from '../../services/AuthService';
-import { loginRequest, loginSuccess, loginFailure } from '../slices/authSlice';
+import { loginRequest, loginSuccess, loginFailure, logout, logoutRequest } from '../slices/authSlice';
 
 // Worker Saga: thực hiện cuộc gọi API
 function* handleLogin(action) {
@@ -18,9 +18,29 @@ function* handleLogin(action) {
   }
 }
 
+function* handleLogout() {
+  try {
+    // Hiển thị loading 5 giây
+    yield delay(5000);
+    yield put(logout());
+  } catch (error) {
+    console.error('Logout error:', error);
+    // Nếu có logic thất bại thì thêm `logoutFailure()`
+  }
+}
+
 // Watcher Saga: lắng nghe action loginRequest
-function* authSaga() {
+function* watchLoginSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
 }
 
-export default authSaga;
+function* watchLogoutSaga() {
+  yield takeLatest(logoutRequest.type, handleLogout);
+}
+
+export default function* authSaga() {
+  yield all([
+    watchLoginSaga(),
+    watchLogoutSaga(),
+  ]);
+}

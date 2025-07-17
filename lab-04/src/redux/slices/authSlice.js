@@ -38,6 +38,10 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload; // Lưu thông báo lỗi
     },
+    logoutRequest: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
     // Action này để thiết lập lại trạng thái khi logout
     logout: (state) => {
       state.isLoggedIn = false;
@@ -60,5 +64,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginRequest, loginSuccess, loginFailure, logout, setAuthData } = authSlice.actions;
+export const { loginRequest, loginSuccess, loginFailure, logout, setAuthData, logoutRequest } = authSlice.actions;
 export default authSlice.reducer;

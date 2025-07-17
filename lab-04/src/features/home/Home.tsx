@@ -13,6 +13,7 @@ import { FaCheck } from "react-icons/fa6";
 import HomePlaylistSelection from "./HomePlaylistSelection";
 import HomeTrendingSection from "./HomeTrendingSection";
 import Footer from "../../components/Footer/Footer";
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
   const categories = [
@@ -32,6 +33,8 @@ export default function Home() {
     "Presentations"
   ];
 
+  const { t } = useTranslation();
+
   return (
     <>  
         <Header />
@@ -47,12 +50,12 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-10" />
           
           <div className="absolute-center text-center w-full flex-col">
-            <h2 className="font-bold mb-5 xl:text-5xl lg:text-4xl md:text-2xl sm:text-xl">Premium Tracks and Sound Effects, Simple Licenses</h2>
-            <p className="font-medium mb-5 xl:text-md lg:text-sm sm:text-xs">Unlimited downloads from our library of studio-quality audio for your videos, podcasts, games, and apps for one simple low price.</p>
-            <a href="https://lucide.dev/icons/search" className="underline text-yellow-500 flex items-center justify-center gap-x-1 font-semibold mb-5">Get Unlimited Access <ArrowRight /></a>
+            <h2 className="font-bold mb-5 xl:text-5xl lg:text-4xl md:text-2xl sm:text-xl">{t('h2')}</h2>
+            <p className="font-medium mb-5 xl:text-md lg:text-sm sm:text-xs">{t('h2_description')}</p>
+            <a href="https://lucide.dev/icons/search" className="underline text-yellow-500 flex items-center justify-center gap-x-1 font-semibold mb-5">{t('h2_description_2')}<ArrowRight /></a>
             
             <form action="" className="flex items-center justify-center">
-              <input type="text" name="search" id="search" placeholder="Find my track by searching genre, mood, instrument..."
+              <input type="text" name="search" id="search" placeholder={t('home_input_placeholder')}
               className="w-1/2 py-3 pl-6 pr-12 rounded-l-full bg-white/1 placeholder:text-gray-300 backdrop-blur-md border-[2px] border-white border-r-[0] focus:outline-none"
               />
               <button name="submit" title="submit" className=" p-3 rounded-r-full border-[2px] border-white bg-yellow-700">
@@ -64,8 +67,8 @@ export default function Home() {
 
         <div className=" bg-gradient-black-down w-full text-by-theme pt-40">
           <div className="">
-            <p className="font-semibold text-center font-1 md:text-3xl lg:text-4xl sm:text-2xl ">Music and sound effects for any platform</p>
-            <p className="font-light text-center mt-3 md:text-lg ">Providing royalty-free music for over 4.2M creative projects since 2015.</p>
+            <p className="font-semibold text-center font-1 md:text-3xl lg:text-4xl sm:text-2xl ">{t('platform_title')}</p>
+            <p className="font-light text-center mt-3 md:text-lg ">{t('platform_description')}</p> 
             <div className="home-social-media-intro">
               <HomeDescriptionItem img_URL={"/img/podcast.jpg"} name={"Podcast"}/>
               <HomeDescriptionItem img_URL={"/img/youtube.jpg"} name={"Youtube"}/>
@@ -76,9 +79,9 @@ export default function Home() {
 
           <div className="home-project-n-brand-container">
             <div className="home-project-introduction">
-                <p className="font-semibold text-4xl mb-10 font-1 md:text-xl lg:text-4xl sm:text-md">Easy listening for every project</p>
-                <p className="font-light sm:text-xss md:text-md">Simple, substantial licenses with all rights included for every type of project</p>
-                <button className="primary-button mt-10">See our licenses</button>
+                <p className="font-semibold text-4xl mb-10 font-1 md:text-xl lg:text-4xl sm:text-md">{t('project_title')}</p>
+                <p className="font-light sm:text-xss md:text-md">{t('project_description')}</p>
+                <button className="primary-button mt-10">{t('button_license')}</button>
             </div>
             <div className="home-brand-project-container">
               <div className="home-project-brand-list">
