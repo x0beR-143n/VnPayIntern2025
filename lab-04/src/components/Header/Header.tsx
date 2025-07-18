@@ -7,8 +7,12 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from "react-redux";
 import { logoutRequest } from "../../redux/slices/authSlice";
 import LogoutLoading from '../../components/Layout/LoadingLogout';
+import { useTranslation } from "react-i18next";
 
 function Header() {
+
+    const {t} = useTranslation()
+
     const collections = [
         { img_url: '/img/bg1.jpg', total_track: 15, name: 'Midnight Chill', description: 'A smooth blend of lo-fi and ambient beats to wind down your night.' },
         { img_url: '/img/bg2.jpg', total_track: 22, name: 'Morning Boost', description: 'Energetic pop and electronic tracks to kickstart your day with motivation.' },
@@ -160,7 +164,7 @@ function Header() {
                     ) : ( 
                         <User className="cursor-pointer" onClick={handleLogin} /> 
                     )}
-                    <button className="primary-button">Subscribe</button>
+                    <button className="primary-button">{t('button_subscribe')}</button>
                     <ShoppingCart className=""/>          
                 </div>
             </div>
