@@ -14,33 +14,33 @@ import storage from 'redux-persist/lib/storage'; // Mặc định là localStora
 
 import authReducer from './slices/authSlice';
 import languageReducer from  './slices/languageSlice'
-import rootSaga from './sagas'; // Import root saga của bạn
+import rootSaga from './sagas'; // Import root saga
 
-// 1. Cấu hình Redux Persist
+// Cấu hình Redux Persist
 const persistConfig = {
   key: 'root', // Key cho localStorage, có thể là bất cứ gì
   storage,     // Cơ chế lưu trữ, ở đây là localStorage
-  whitelist: ['auth', 'language'], // Chỉ lưu trữ slice 'auth'. Các slice khác sẽ không được persist.
-  // blacklist: ['someOtherSlice'] // Nếu bạn muốn loại trừ một slice nào đó
+  whitelist: ['auth', 'language'], // Chỉ lưu trữ slice được khai báo. Các slice khác sẽ không được persist.
+  // blacklist: ['someOtherSlice'] // Nếu muốn loại trừ một slice nào đó
 };
 
-// 2. Kết hợp các reducers
+// Kết hợp các reducers
 const rootReducer = combineReducers({
   auth: authReducer,
   language: languageReducer,
 });
 
-// 3. Bọc rootReducer với persistReducer
-// Dòng này tạo ra một reducer mới có khả năng lưu và tải trạng thái.
+// Bọc rootReducer với persistReducer
+// Tạo ra một reducer mới có khả năng lưu và tải trạng thái.
 // Khi trạng thái thay đổi, persistedReducer sẽ kích hoạt quá trình lưu trữ.
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// 4. Tạo Saga Middleware
+// Tạo Saga Middleware
 const sagaMiddleware = createSagaMiddleware();
 
-// 5. Cấu hình Store
+// Cấu hình Store
 export const store = configureStore({
-  reducer: persistedReducer, // Sử dụng reducer đã được bọc bởi persistReducer
+  reducer: persistedReducer, 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // Bỏ qua các action types của redux-persist để tránh cảnh báo serializable check
@@ -50,10 +50,8 @@ export const store = configureStore({
     }).concat(sagaMiddleware), // Thêm sagaMiddleware vào danh sách middleware
 });
 
-// 6. Chạy các Sagas
 sagaMiddleware.run(rootSaga);
 
-// 7. Tạo persistor object để tích hợp với PersistGate
-// Dòng này khởi tạo quá trình persist. Nó bắt đầu lắng nghe các thay đổi của store
-// và lưu chúng vào storage (localStorage trong trường hợp này).
+// Tạo persistor object để tích hợp với PersistGate
+// Dòng này khởi tạo quá trình persist. Nó bắt đầu lắng nghe các thay đổi của store và lưu chúng vào storage (localStorage).
 export const persistor = persistStore(store);

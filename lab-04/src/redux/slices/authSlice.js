@@ -52,17 +52,12 @@ const authSlice = createSlice({
       state.error = null;
       // Redux Persist sẽ tự động xóa dữ liệu khi state thay đổi về initialState
     },
-    // Action này dùng để khôi phục trạng thái từ Redux Persist
-    // (Thực tế Redux Persist tự động làm, nhưng có thể dùng cho logic phức tạp hơn)
-    setAuthData: (state, action) => {
-      const { isLoggedIn, username, email, token } = action.payload;
-      state.isLoggedIn = isLoggedIn;
-      state.username = username;
-      state.email = email;
-      state.token = token;
-    },
+    restartLoginState: (state) => {
+      state.isLoading = false;
+      state.error = null;
+    }
   },
 });
 
-export const { loginRequest, loginSuccess, loginFailure, logout, setAuthData, logoutRequest } = authSlice.actions;
+export const { loginRequest, loginSuccess, loginFailure, logout, setAuthData, logoutRequest, restartLoginState } = authSlice.actions;
 export default authSlice.reducer;

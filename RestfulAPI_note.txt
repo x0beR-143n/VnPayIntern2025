@@ -1,0 +1,52 @@
+-REST(Representational State Transfer) là 1 kiểu kiến trúc phần mềm dành cho các hệ thống phân tán, đặc biệt là Web. 
+-API(Application Programming Interface), là 1 tập hợp các quy tắc và định nghĩa cho phép 2 ứng dụng phần mềm khác nhau giao tiếp và trao đổi dữ liệu với nhau.
+=> RESTful API là API tuân theo nguyên tắc REST, dùng HTTP để giao tiếp giữa client (ví dụ: ứng dụng web/mobile) và server.
+
+Các đặc điểm chính
+- Client server Architecture, Client chỉ quan tâm đến giao diện người dùng và gửi yêu cầu, server chỉ quan tâm đến việc xử lý yêu cầu và cung cấp dữ liệu.
+- Stateless, mỗi request phải chứa đủ thông tin mà server yêu cầu để server hiểu và xử lý. Server không lưu bất kỳ thông tin nào về trạng thái của client giữa các yêu cầu.
+- Cacheable, có thể được cache để tăng hiệu năng
+- Layered System (Hệ thống phân lớp), Một client không nhất thiết phải biết liệu nó đang giao tiếp trực tiếp với server cuối cùng hay một server trung gian (ví dụ: proxy, load balancer, API gateway).
+- Uniform Interface (Giao diện đồng nhất): 
++, Identification of resources (Nhận diện tài nguyên): Mỗi tài nguyên được nhận diện bằng 1 URL duy nhất. Ví dụ: /users, /products/123.
++, Client nhận một "biểu diễn" của tài nguyên (ví dụ: JSON, XML, HTML) và có thể sửa đổi nó rồi gửi lại cho server để cập nhật tài nguyên.
++, Hypermedia as the Engine of Application State (HATEOAS - Siêu phương tiện là động cơ của trạng thái ứng dụng): Đây là nguyên tắc nâng cao nhất. 
+Server nên bao gồm các siêu liên kết (hyperlinks) trong các phản hồi của nó để client biết những hành động tiếp theo có thể thực hiện
+
+HTTP Methods (Các phương thức HTTP) trong RESTful API:
+- GET: Dùng để đọc/truy xuất dữ liệu từ server. Yêu cầu GET không thay đổi trạng thái của server.
+- POST: Dùng để tạo một tài nguyên mới trên server. Dữ liệu mới thường được gửi trong phần thân (body) của yêu cầu.
+- PUT: Dùng để cập nhật hoàn toàn một tài nguyên hiện có. Yêu cầu PUT thay thế toàn bộ tài nguyên bằng dữ liệu mới được cung cấp.
+- PATCH: Dùng để cập nhật một phần của tài nguyên hiện có. Chỉ gửi các trường cần thay đổi.
+- DELETE: Dùng để xóa một tài nguyên.
+
+Cấu trúc URL RESTful chuẩn
+- Tài nguyên dùng danh từ số nhiều: /users, /products
+- ID để truy cập một tài nguyên cụ thể: GET /users/123, DELETE /products/456
+- Không dùng động từ: /getUsers mà sử dụng danh từ => /users
+- Nested resources: /users/1/posts (bài viết của user 1) hoặc /users/123/orders (lấy tất cả đơn hàng của người dùng 123).
+
+Mã trạng thái HTTP (HTTP Status Codes):
+
+-2xx (Success): Yêu cầu được xử lý thành công.
++, 200 OK: Yêu cầu thành công.
++, 201 Created: Tài nguyên mới đã được tạo thành công (thường dùng cho POST).
++, 204 No Content: Yêu cầu thành công nhưng không có nội dung để trả về (thường dùng cho DELETE).
+- 3xx (Redirection): Cần thực hiện hành động bổ sung để hoàn tất yêu cầu.
+- 4xx (Client Error): Lỗi từ phía client.
++, 400 Bad Request: Yêu cầu không hợp lệ.
++, 401 Unauthorized: Không có quyền xác thực.
++, 403 Forbidden: Bị cấm truy cập.
++, 404 Not Found: Tài nguyên không tồn tại.
++, 405 Method Not Allowed: Phương thức HTTP không được phép cho tài nguyên này.
++, 409 Conflict: Xung đột (ví dụ: cố gắng tạo tài nguyên đã tồn tại).
+- 5xx (Server Error): Lỗi từ phía server.
++, 500 Internal Server Error: Lỗi không xác định trên server.
++, 503 Service Unavailable: Server không khả dụng (ví dụ: đang bảo trì)
+
+Hạn chế:
+Over-fetching: Client có thể nhận được nhiều dữ liệu hơn mức cần thiết trong một phản hồi.
+Under-fetching: Client cần thực hiện nhiều yêu cầu để lấy đủ dữ liệu cần thiết. 
+
+Không phù hợp cho các ứng dụng thời gian thực: Do tính phi trạng thái và mô hình yêu cầu/phản hồi, RESTful API không tối ưu cho các ứng dụng cần giao tiếp hai chiều liên tục hoặc truyền dữ liệu theo thời gian thực (ví dụ: chat, game online).
+Đối với các trường hợp này, WebSockets thường là lựa chọn tốt hơn.

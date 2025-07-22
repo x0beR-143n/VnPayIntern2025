@@ -25,7 +25,6 @@ function* handleLogout() {
     yield put(logout());
   } catch (error) {
     console.error('Logout error:', error);
-    // Nếu có logic thất bại thì thêm `logoutFailure()`
   }
 }
 

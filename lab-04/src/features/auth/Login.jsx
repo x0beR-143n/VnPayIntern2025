@@ -6,7 +6,7 @@ import { FaFacebook } from "react-icons/fa";
 import { SiApple } from "react-icons/si";
 import { useDispatch, useSelector } from 'react-redux';
 import {useNavigate} from 'react-router-dom'
-import { loginRequest } from '../../redux/slices/authSlice';
+import { loginRequest, restartLoginState } from '../../redux/slices/authSlice';
 import LoginLoading from '../../components/Layout/LoadingLogin'
 
 export default function Login() {
@@ -16,6 +16,13 @@ export default function Login() {
     const [password, setPassword] = useState('');
 
     const authState = useSelector(state => state.auth);
+
+    useEffect(() => {
+        return () => {
+            dispatch(restartLoginState());
+        };
+    }, []);
+
 
     useEffect(() => {
         if (authState.isLoggedIn) {
