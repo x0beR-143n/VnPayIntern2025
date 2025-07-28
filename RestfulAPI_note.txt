@@ -50,3 +50,13 @@ Under-fetching: Client cần thực hiện nhiều yêu cầu để lấy đủ 
 
 Không phù hợp cho các ứng dụng thời gian thực: Do tính phi trạng thái và mô hình yêu cầu/phản hồi, RESTful API không tối ưu cho các ứng dụng cần giao tiếp hai chiều liên tục hoặc truyền dữ liệu theo thời gian thực (ví dụ: chat, game online).
 Đối với các trường hợp này, WebSockets thường là lựa chọn tốt hơn.
+
+Triển khai:
+Server có các framework cho JavaScript/TypeScript để xử lí các request từ client:
+- Express.js
+- NestJS
+- Koa.js
+- Hapi.j
+Phía client (React, Angular, Vue, Vanilla JS, etc.) sẽ gọi API đến backend bằng http request. Có nhiều cách:
+- Fetch API (Built-in của trình duyệt):
+- Axios 
