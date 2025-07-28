@@ -1,0 +1,290 @@
+
+.bg-img-container {
+    width: 100%;
+    height: 350px;
+    background-color: #f5f2db;
+    position: relative;
+}
+
+.bg-img {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    width: 30%;
+}
+
+.bg-img-2 {
+    position: absolute;
+    top: 3px;
+    left: 60%;
+    width: 30%;
+    transform: translateX(-50%)
+}
+
+.back_n_title_container {
+    position: absolute;
+    top: 38px;
+    left: 16px;
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+}
+
+.bg-title {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.bg-back {
+    font-size: 50px;
+}
+
+.cancel_help_like_container {
+    position: absolute;
+    top: 38px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.like {
+    border: 2px solid rgb(146, 146, 146);
+    border-radius: 50px;
+    padding: 10px;
+    font-size: 40px;
+    background-color: white;
+}
+
+.cancel_help_container {
+    display: flex;
+    align-items: center;
+    border: 2px solid rgb(146, 146, 146);
+    border-radius: 50px;
+    padding: 10px 15px 10px 15px;
+    background-color: white;
+    column-gap: 10px;
+}
+
+.help_cancel_seperator {
+    width: 1px;
+    margin-left: 6px;
+    height: 30px;
+    background-color: black;
+}
+
+.bg-description {
+    font-size: 50px;
+    font-weight: 1000;
+    font-family: "Roboto", sans-serif;
+    position: absolute;
+    top: 108px;
+    left: 36px;
+    display: flex;
+    flex-direction: column;
+    color: rgb(53, 53, 79);
+}
+
+.vehicle-card {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid rgb(229, 229, 229);
+    border-radius: 30px 30px 0 0;
+    background-color: white;
+    padding: 30px 40px 30px 40px;
+    width: 75%; 
+}
+
+.destination-container {
+    border: 2px solid rgb(229, 229, 229);
+    border-radius: 20px;
+    background-color: rgb(245, 245, 245);
+    padding: 30px 40px 30px 40px; 
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+    text {
+        color: rgb(53, 53, 53);
+        font-weight: 500;
+    }
+}
+
+.destination-items {
+    display: flex;
+    align-items: center;
+    color: rgb(119, 116, 116);
+    font-size: 30px;
+    column-gap: 20px;
+}
+
+.horizontal-seperator {
+    width: 95%;
+    margin: auto;
+    height: 1px;
+    background-color: rgb(165, 165, 165);
+}
+.vehicle-date {
+    font-size: 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    margin-top: 20px;
+}
+
+.search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 20px;
+    padding: 20px 0 20px 0;
+    color: rgb(232, 225, 225);
+    font-size: 30px;
+    font-weight: 600;
+    background-color: #4465f0;
+    border: 0;
+}
+
+/*Trip card from here */
+.trip-card {
+    border: 2px solid rgb(229, 229, 229);
+    border-radius: 30px 30px 30px 30px;
+    background-color: white;
+    padding: 30px 40px 30px 40px;
+    width: 80%;
+    margin: auto;
+}
+
+.trips-card-container {
+    margin-top: 500px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.bg-black {
+    background-color: rgb(245, 245, 245);
+}
+
+.departure-and-duration {
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.departure-time {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.duration_in_mins {
+    color: rgb(151, 151, 151);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.start_end_point_name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text {
+        font-size: 25px;
+        font-weight: 600;
+        width: 200px;
+    }
+}
+
+.trip_card_circle {
+    width: 12px;
+    height: 10px;
+}
+
+.trip_card_rectangle {
+    width: 10px;
+    height: 4px;
+}
+
+.circle_n_rec_container {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.to_icon {
+    margin: 0 10px 0 10px;
+}
+
+.transport_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.transport_logo {
+    width: 70px;
+    height: 70px;
+}
+
+.transport_name_n_logo {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+
+.transport_name {
+    font-size: 30px;
+    font-weight: 550;
+    display: flex;
+    flex-direction: column;
+}
+
+.transport_rules {
+    color: #4465f0;
+    margin-top: -5px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.transport_rules:hover {
+    text-decoration: underline;
+}
+
+.rating_n_detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.star {
+    color: rgb(255, 194, 82);
+    font-size: 30px;
+}
+
+.rating_score {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.transport_detail {
+    font-size: 20px;
+    margin-top: -5px;
+}
