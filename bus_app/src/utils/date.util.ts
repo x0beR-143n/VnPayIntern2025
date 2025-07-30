@@ -12,11 +12,15 @@ const getTodayDate = () => {
   return `${day}/${month}/${year}`;
 };
 
-const convertMinuteToHour = (mins) => {
+const convertMinuteToHour = (mins:number) => {
   const hours = Math.floor(mins / 60);
   const remainingMinutes = mins % 60;
 
   return `${hours} giờ ${remainingMinutes} phút`;
 }
 
-export { getVietnameseDay, getTodayDate, convertMinuteToHour };
+const formatCurrencyVND = (amount: number) => {
+  return amount.toLocaleString('en-US') + 'đ';
+}
+
+export { getVietnameseDay, getTodayDate, convertMinuteToHour, formatCurrencyVND };

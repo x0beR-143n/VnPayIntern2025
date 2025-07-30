@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Image } from '@vnxjs/components'
+import { View, Text, Image, Button } from '@vnxjs/components'
 // icons
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { FaRegStar, FaHeadset, FaRegCircle, FaMapMarkerAlt } from "react-icons/fa";
@@ -11,7 +11,7 @@ import { FaStar } from "react-icons/fa6";
 import { Trip } from '../../interfaces/trip'
 import { TripService } from '../../services/TripService' 
 import './index.scss'
-import { getVietnameseDay, getTodayDate, convertMinuteToHour } from '../../utils/date.util'
+import { getVietnameseDay, getTodayDate, convertMinuteToHour, formatCurrencyVND } from '../../utils/date.util'
 import logo from '../../assets/img/logo.png'
 import to_icon from '../../assets/icon/ic_arrow.svg'
 import circle from '../../assets/img/circle.png'
@@ -79,9 +79,9 @@ export default function Index() {
               <Text>{day}, ngày {getTodayDate()};</Text>
             </View>
             <View>
-              <button className='search-button'>
+              <Button className='search-button'>
                 <MdOutlineSearch />
-                Tìm kiếm</button>
+                Tìm kiếm</Button>
             </View>
           </View>
         </View>
@@ -132,7 +132,14 @@ export default function Index() {
                 <Text className='transport_detail'>{trip.vehicle_name}</Text>
               </View>
             </View>
-
+            
+            <View className='price_seat_continue_button'>
+              <View className='price_and_seat'>
+                <Text className='price_seat_font_w'>Từ <Text className='price'>{formatCurrencyVND(trip.fare_amount)}</Text></Text>
+                <Text className='price_seat_font_w'>Chỉ còn {trip.available_seat} chỗ trống</Text>
+              </View>
+              <Button className='continue_button'>Tiếp tục</Button>
+            </View> 
           </View>
         ))}
       </View>
