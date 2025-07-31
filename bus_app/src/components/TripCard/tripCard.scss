@@ -1,0 +1,191 @@
+/*Trip card from here */
+.trip-card {
+    border: 2px solid rgb(229, 229, 229);
+    border-radius: 30px 30px 30px 30px;
+    background-color: white;
+    padding: 30px 40px 30px 40px;
+    width: 80%;
+    margin: auto;
+    position: relative;
+}
+
+.right-circle {
+    background-color: rgb(240, 240, 240);
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 99px;
+    top: 65%;
+    left: -25px;
+}
+
+.left-circle {
+    background-color: rgb(240, 240, 240);
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 99px;
+    top: 65%;
+    right: -25px;
+}
+
+.departure-and-duration {
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.departure-time {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.duration_in_mins {
+    color: rgb(151, 151, 151);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.trip-name {
+    font-size: 25px;
+    font-weight: 700;
+    color: #0d2eb0;
+}
+
+.start_end_point_name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text {
+        font-size: 25px;
+        font-weight: 600;
+        width: 200px;
+    }
+}
+
+.trip_card_circle {
+    width: 12px;
+    height: 10px;
+}
+
+.trip_card_rectangle {
+    width: 10px;
+    height: 4px;
+}
+
+.circle_n_rec_container {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.to_icon {
+    margin: 0 10px 0 10px;
+    width: 30px;
+}
+
+.transport_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.transport_logo {
+    width: 70px;
+    height: 70px;
+}
+
+.transport_name_n_logo {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+
+.transport_name {
+    font-size: 30px;
+    font-weight: 550;
+    display: flex;
+    flex-direction: column;
+}
+
+.transport_rules {
+    color: #4465f0;
+    margin-top: -5px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.transport_rules:hover {
+    text-decoration: underline;
+}
+
+.rating_n_detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.star {
+    color: rgb(255, 194, 82);
+    font-size: 30px;
+}
+.heart {
+    width: 35px;
+}
+
+.rating_score {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.transport_detail {
+    font-size: 20px;
+    margin-top: -5px;
+}
+
+.price_seat_continue_button {
+    text {
+        font-size: 25px;
+    }
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.price_seat_font_w {
+    font-weight: 500;
+}
+
+.price_and_seat {
+    display: flex;
+    flex-direction: column;
+}
+
+.price {
+    color: #4465f0;
+    font-weight: 700;
+}
+
+.continue_button {
+    color: #4465f0;
+    font-weight: 700;
+    width: 150px;
+    background-color: #f4f6f7;
+    margin-right: 0;
+    font-size: 25px;
+}

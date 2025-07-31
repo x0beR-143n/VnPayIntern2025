@@ -1,0 +1,94 @@
+.scroll-view {
+    background-color: rgb(240, 240, 240);
+    height: 100vh;
+}
+
+.search_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-top: 30px;
+}
+
+.trip_name_n_back {
+    display: flex;
+    column-gap: 5px;
+}
+
+.back_ic {
+    width: 40px;
+}
+
+.trip_name {
+    display: flex;
+    flex-direction: column;
+}
+
+.trip_name_title {
+    font-weight: 700;
+    font-size: 25px;
+}
+
+.trip_name_description {
+    font-weight: 600;
+    color: rgb(161, 161, 161);
+    font-size: 20px;
+}
+
+.filter-clear {
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 15px;
+    color: #3556d8;
+    text-decoration: underline;
+    image {
+        width: 18px;
+        margin-right: 5px;
+    }
+}
+
+.day_picker_container {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    column-gap: 50px;
+    padding: 35px;
+}
+
+.button_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 30px;
+    button {
+        font-size: 20px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        column-gap: 5px;
+        padding: 0 30px 0 30px;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+    }
+}
+
+.unchosen_button {
+    background-color: rgb(230, 230, 230);
+}
+
+.chosen_button {
+    background-color: #3556d8;
+    color: white
+}
+
+.filter-ic {
+    width: 20px;
+}
+
+.trips-card-container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}

@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Home Page'
+  navigationBarTitleText: 'Bus Home'
 })

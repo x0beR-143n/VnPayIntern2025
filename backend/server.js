@@ -133,6 +133,64 @@ app.get('/api/trips', (req, res) => {
     } 
 })
 
+app.get('/api/summary', (req, res) => {
+    const trips = readTripData();
+
+    if (!trips) {
+        return res.status(500).json({ message: 'Không thể đọc dữ liệu chuyến đi' });
+    }
+
+    // Lấy danh sách name và id từ transport_information
+    const transportMap = new Map();
+    const vehicleTypes = new Set();
+
+    trips.forEach((trip) => {
+        const info = trip.transport_information;
+        if (info && info.name && info.id) {
+            transportMap.set(info.name, info.id);
+        }
+
+        if (trip.vehicle_type) {
+            vehicleTypes.add(trip.vehicle_type);
+        }
+    });
+
+    // Convert Map và Set sang Array
+    const transportList = Array.from(transportMap.entries()).map(([name, id]) => ({ name, id }));
+    const vehicleTypeList = Array.from(vehicleTypes);
+
+    res.status(200).json({
+        success: true,
+        transportProviders: transportList,
+        vehicleTypes: vehicleTypeList
+    });
+});
+
+app.get('/api/provinces', (req, res) => {
+    const filePath = path.join(__dirname, 'provinces.json');
+    
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading provinces.json:', err);
+            return res.status(500).json({
+                success: false,
+                message: 'Server error when reading provinces data'
+            });
+        }
+
+        try {
+            const provinces = JSON.parse(data);
+            res.status(200).json(provinces);
+        } catch (parseError) {
+            console.error('Error parsing provinces.json:', parseError);
+            res.status(500).json({
+                success: false,
+                message: 'Invalid JSON format in provinces.json'
+            });
+        }
+    });
+});
+
 app.get('/', (req, res) => {
     res.status(200).send('<h1>Server Express của bạn đang hoạt động!</h1>');
 });

@@ -1,3 +1,7 @@
+.scroll-view {
+    background-color: rgb(240, 240, 240);
+    height: 100vh;
+}
 
 .bg-img-container {
     width: 100%;
@@ -105,11 +109,6 @@
     display: flex;
     flex-direction: column;
     row-gap: 20px;
-
-    text {
-        color: rgb(53, 53, 53);
-        font-weight: 500;
-    }
 }
 
 .destination-items {
@@ -128,7 +127,7 @@
 }
 .vehicle-date {
     font-size: 30px;
-    font-weight: 700;
+    font-weight: 500;
     display: flex;
     align-items: center;
     column-gap: 20px;
@@ -150,174 +149,31 @@
     border: 0;
 }
 
-/*Trip card from here */
-.trip-card {
-    border: 2px solid rgb(229, 229, 229);
-    border-radius: 30px 30px 30px 30px;
-    background-color: white;
-    padding: 30px 40px 30px 40px;
-    width: 80%;
-    margin: auto;
+.typical_trip_text {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 450px;
+    font-weight: 500;
 }
 
 .trips-card-container {
-    margin-top: 500px;
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     row-gap: 30px;
 }
 
-.bg-black {
-    background-color: rgb(245, 245, 245);
-}
-
-.departure-and-duration {
-    font-size: 25px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.departure-time {
+.picker {
     display: flex;
     align-items: center;
     column-gap: 10px;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.duration_in_mins {
-    color: rgb(151, 151, 151);
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.start_end_point_name {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    column-gap: 50px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text {
-        font-size: 25px;
-        font-weight: 600;
-        width: 200px;
-    }
-}
-
-.trip_card_circle {
-    width: 12px;
-    height: 10px;
-}
-
-.trip_card_rectangle {
-    width: 10px;
-    height: 4px;
-}
-
-.circle_n_rec_container {
-    display: flex;
-    align-items: center;
-    column-gap: 5px;
-}
-
-.to_icon {
-    margin: 0 10px 0 10px;
-}
-
-.transport_info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 30px;
-}
-
-.transport_logo {
-    width: 70px;
-    height: 70px;
-}
-
-.transport_name_n_logo {
-    display: flex;
-    align-items: center;
-    column-gap: 20px;
-}
-
-.transport_name {
-    font-size: 30px;
-    font-weight: 550;
-    display: flex;
-    flex-direction: column;
-}
-
-.transport_rules {
-    color: #4465f0;
-    margin-top: -5px;
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.transport_rules:hover {
-    text-decoration: underline;
-}
-
-.rating_n_detail {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.rating {
-    display: flex;
-    align-items: center;
-    column-gap: 5px;
-}
-
-.star {
-    color: rgb(255, 194, 82);
-    font-size: 30px;
-}
-
-.rating_score {
-    font-size: 30px;
-    font-weight: 600;
-}
-
-.transport_detail {
-    font-size: 20px;
-    margin-top: -5px;
-}
-
-.price_seat_continue_button {
     text {
         font-size: 25px;
     }
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 50px;
 }
 
-.price_seat_font_w {
-    font-weight: 500;
-}
-
-.price_and_seat {
-    display: flex;
-    flex-direction: column;
-}
-
-.price {
-    color: #4465f0;
+.chosen_destination_text {
     font-weight: 700;
-}
-
-.continue_button {
-    color: #4465f0;
-    font-weight: 700;
-    width: 150px;
-    background-color: #f4f6f7;
-    margin-right: 0;
-    font-size: 25px;
+    color:#4465f0;
 }

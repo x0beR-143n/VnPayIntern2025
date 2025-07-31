@@ -1,47 +1,102 @@
 import { useEffect, useState } from 'react'
-import { View, Text, Image, Button } from '@vnxjs/components'
+import { View, Text, Image, Button, Picker, ScrollView } from '@vnxjs/components'
+import Vnmf from '@vnxjs/vnmf';
 // icons
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { FaRegStar, FaHeadset, FaRegCircle, FaMapMarkerAlt } from "react-icons/fa";
 import { LuCalendarDays } from "react-icons/lu";
 import { MdOutlineCancel, MdOutlineSearch } from "react-icons/md";
-import { FaStar } from "react-icons/fa6";
-
 //import local
 import { Trip } from '../../interfaces/trip'
 import { TripService } from '../../services/TripService' 
-import './index.scss'
-import { getVietnameseDay, getTodayDate, convertMinuteToHour, formatCurrencyVND } from '../../utils/date.util'
+import { LocationService } from '../..//services/LocationService';
+import { getVietnameseDay} from '../../utils/date.util'
 import logo from '../../assets/img/logo.png'
-import to_icon from '../../assets/icon/ic_arrow.svg'
-import circle from '../../assets/img/circle.png'
-import rectangel from '../../assets/img/rectangle.png'
-import heart from '../../assets/icon/ic_heart.svg'
-import heart_selected from '../../assets/icon/ic_heart_selected.svg'
+import TripCard from '../../components/TripCard/TripCard';
+import './index.scss'
+
 
 export default function Index() {
   
   const day = getVietnameseDay();
 
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [cities_name, setCitiesName] = useState<string[]>([]);
+  //const [cities_code, setCitiesCode] = useState<number[]>([]);
+  const [start_city_index, setStartCityIndex] = useState(0);
+  const [end_city_index, setEndCityIndex] = useState(0);
+  const [canGetNewData, setCanGetNewData] = useState(true);
+  const [page, setPage] = useState(2);
 
   useEffect(() => {
     const fetchTrips = async () => {
-      const res = await TripService.getTrips(1, 10)
+      const res = await TripService.getTrips(1, 15);
       if (res.success) {
         setTrips(res.data)
-        console.log("Gọi thành công")
       } else {
         console.error('Failed to fetch trips:', res.message)
       }
     }
 
+    const fetchCities = async () => {
+      const res = await LocationService.getProvinces();
+      if(res.success) {
+        let tmp_cities = res.data;
+        let tmp_city_name: string[] = [];
+        //let tmp_city_code: number[] = [];
+        for(let i = 0 ; i<tmp_cities.length; i++) {
+          tmp_city_name.push(tmp_cities[i].name);
+          //tmp_city_code.push(tmp_cities[i].code);
+        }
+        tmp_city_name.push("Tất cả");
+        setCitiesName(tmp_city_name);
+        //setCitiesCode(tmp_city_code);
+      } else {
+        console.error("Không thể lấy dữ liệu tỉnh thành:", res.message)
+      }
+    }
+
     fetchTrips()
+    fetchCities()
   }, [])
 
+  const navigateToSearch = () => {
+    Vnmf.navigateTo({
+      url: 'pages/search/index',
+    })  
+  }
+
+  const fetchNewData = async () => {
+      const res = await TripService.getTrips(page, 15);
+      if (res.success) {
+        let current_array = trips;
+        let added_array = res.data;
+        const mergedArray = [...current_array, ...added_array];
+        setTrips(mergedArray);
+        let nextPage = page + 1;
+        setPage(nextPage);
+        setCanGetNewData(true);
+        console.log("New Data Fetched")
+      } else {
+        console.error('Failed to fetch new trips:', res.message)
+        setCanGetNewData(true);
+      }
+    }
+
+  const onSCroll = (e) => {
+      let max_height = e.detail.scrollHeight;
+      let current_height = e.detail.scrollTop;
+      if(max_height - current_height <= 2500) {
+        if(canGetNewData) {
+          setCanGetNewData(false);
+          fetchNewData();
+        }
+        console.log("Get new data now")
+      }
+  }
 
   return (
-    <View className='bg-black'>
+    <ScrollView className='scroll-view' scrollY scrollWithAnimation onScroll={onSCroll}>
       <View className='bg-img-container'>
         <Image src={logo} className='bg-img' />
         <View className='back_n_title_container'>
@@ -65,21 +120,33 @@ export default function Index() {
 
         <View className='vehicle-card'>
           <View className='destination-container'>
-            <View className='destination-items'>
-              <FaRegCircle  />
-              <Text>Chọn điểm đi</Text>
-            </View>
+            <Picker mode='selector' range={cities_name} onChange={(e) => {setStartCityIndex(e.detail.value)}}>
+                  <View className='picker'>
+                    <View className='destination-items'>
+                      <FaRegCircle  />
+                      <Text className=''>Chọn điểm đi:</Text>  
+                    </View>
+                    <Text className='chosen_destination_text'>{cities_name[start_city_index]}</Text>     
+                  </View>
+            </Picker>
             <View className='horizontal-seperator'></View>
             <View className='destination-items'>
-              <FaMapMarkerAlt />
-              <Text>Chọn điểm đến</Text>
+              <Picker mode='selector' range={cities_name} onChange={(e) => {setEndCityIndex(e.detail.value)}}>
+                  <View className='picker'>
+                    <View className='destination-items'>
+                      <FaMapMarkerAlt  />
+                      <Text className=''>Chọn điểm đến:</Text>  
+                    </View>
+                    <Text className='chosen_destination_text'>{cities_name[end_city_index]}</Text>     
+                  </View>
+              </Picker>
             </View>
             <View className='vehicle-date'>
               <LuCalendarDays />
-              <Text>{day}, ngày {getTodayDate()};</Text>
+              <Text>{day}, ngày 20/03/2024;</Text>
             </View>
             <View>
-              <Button className='search-button'>
+              <Button className='search-button' onClick={navigateToSearch}>
                 <MdOutlineSearch />
                 Tìm kiếm</Button>
             </View>
@@ -87,64 +154,15 @@ export default function Index() {
         </View>
       </View>
       
+      <Text className='typical_trip_text font-R'>Các chuyến xe tiêu biểu</Text>
+
       <View className='trips-card-container'>
         {trips.map((trip, index) => (
-          <View key={index} className='trip-card'>
-            <View className='departure-and-duration'>
-              <View className='departure-time'>
-                <Text>{trip.departure_time}</Text>
-                <Text>{trip.departure_date.replace(/-/g, "/")}</Text>
-              </View>
-              <View>
-                <Text className='duration_in_mins'>{convertMinuteToHour(trip.duration_in_min)}</Text>
-              </View>
-            </View>
-            <View className='start_end_point_name'>
-              <Text className='text-align-r'>{trip.merchant_start_point_name}</Text>
-              <View className='circle_n_rec_container'>
-                <Image className='trip_card_circle' src={circle}></Image>
-                <Image className='trip_card_rectangle' src={rectangel}></Image>
-                <Image className='trip_card_rectangle' src={rectangel}></Image>
-                <Image className='trip_card_rectangle' src={rectangel}></Image>
-                <Image src={to_icon} className='to_icon' />
-                <Image className='trip_card_rectangle' src={rectangel}></Image>
-                <Image className='trip_card_rectangle' src={rectangel}></Image>
-                <Image className='trip_card_rectangle' src={rectangel}></Image>
-                <Image className='trip_card_circle' src={circle}></Image>
-              </View>
-              <Text className='text-align-l'>{trip.merchant_end_point_name }</Text>
-            </View>
-            
-            <View class='transport_info'>
-              <View class='transport_name_n_logo'>
-                <Image className='transport_logo' src={trip.transport_information.image_url} />
-                <View class='transport_name'>
-                  <Text>{trip.transport_information.name}</Text>
-                  <Text className='transport_rules'>Chi tiết quy định</Text>
-                </View>
-              </View>
-              <View class='rating_n_detail'>
-                <View className='rating'>
-                  <FaStar className='star' />
-                  <Text className='rating_score'>{trip.transport_information.rating}</Text>
-                  <Image src={heart} className='heart'></Image>
-                </View>
-                <Text className='transport_detail'>{trip.vehicle_name}</Text>
-              </View>
-            </View>
-            
-            <View className='price_seat_continue_button'>
-              <View className='price_and_seat'>
-                <Text className='price_seat_font_w'>Từ <Text className='price'>{formatCurrencyVND(trip.fare_amount)}</Text></Text>
-                <Text className='price_seat_font_w'>Chỉ còn {trip.available_seat} chỗ trống</Text>
-              </View>
-              <Button className='continue_button'>Tiếp tục</Button>
-            </View> 
-          </View>
+          <TripCard trip={trip} key={index} />
         ))}
       </View>
 
-    </View>
+    </ScrollView>
   )
 }
 
