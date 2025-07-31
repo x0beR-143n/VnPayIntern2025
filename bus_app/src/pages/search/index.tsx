@@ -9,8 +9,18 @@ import { Trip } from "../../interfaces/trip";
 import { TripService } from "../../services/TripService";
 import TripCard from "../../components/TripCard/TripCard";
 import './index.scss'
+import Filter from "../../components/filter";
+import { TripFilter } from "../../interfaces/filter";
 
 export default function Index() {    
+    const [renderSearch, setRenderSearch] = useState(true);
+    const [filterData, setFilterData] = useState<TripFilter>({
+        max_price: 0,
+        start_time: [],
+        merchants: [],
+        transports: []
+    });
+    
     const days: number[] = [];
     const days_str : string[] = [];
     const day_of_week = ["T6", "T7", "CN", "T2", "T3", "T4", "T5"];
@@ -26,26 +36,42 @@ export default function Index() {
 
     const [selected_date, setSelectedDate] = useState(3);
     const [selected_button, setSelectedButton] = useState(0);
-
     const [trips, setTrips] = useState<Trip[]>([])
-    
+    const [page, setPage] = useState(1);
+    const [canGetNewData, setCanGetNewData] = useState(true);
+
     useEffect(() => {
         const fetchTrips = async () => {
-          const res = await TripService.getTrips(1, 15);
+          const res = await TripService.getTripsWithFilter(1, 15, filterData);
           if (res.success) {
-            setTrips(res.data)
+            setTrips(res.data);
           } else {
             console.error('Failed to fetch trips:', res.message)
           }
         }
-    
+        
         fetchTrips()
-      }, [])
+    }, [filterData])
     
+    const fetchNewData = async () => {
+      const res = await TripService.getTripsWithFilter(page, 15, filterData);
+      if (res.success) {
+        let current_array = trips;
+        let added_array = res.data;
+        const mergedArray = [...current_array, ...added_array];
+        setTrips(mergedArray);
+        let nextPage = page + 1;
+        setPage(nextPage);
+        setCanGetNewData(true);
+        console.log("New Data Fetched")
+      } else {
+        console.error('Failed to fetch new trips:', res.message)
+        setCanGetNewData(true);
+      }
+  }
+
     const navigateToFilter = () => {
-        Vnmf.navigateTo({
-            url: 'pages/filter/index',
-        })  
+        setRenderSearch(false);
     }
 
     const navigateToHome = () => {
@@ -60,9 +86,33 @@ export default function Index() {
             navigateToFilter();
         }
     }
+    
+    const onSCroll = (e) => {
+        let max_height = e.detail.scrollHeight;
+        let current_height = e.detail.scrollTop;
+        if(max_height - current_height <= 2500) {
+            if(canGetNewData) {
+                setCanGetNewData(false);
+                setCanGetNewData(false);
+                fetchNewData();
+            }
+            
+        }
+    }
 
+    const clearFilter = () => {
+        const newFilterData = {
+            max_price: 0,
+            start_time: [],
+            merchants: [],
+            transports: []  
+        }
+        setFilterData(newFilterData)
+    }
+
+    if(renderSearch) { 
     return (
-        <ScrollView className='scroll-view' scrollY scrollWithAnimation>
+        <ScrollView className='scroll-view' scrollY scrollWithAnimation onScroll={onSCroll}>
             <View className='search_header'> 
                 <View className='trip_name_n_back'>
                     <Image src={back_icon} className='back_ic' onClick={navigateToHome} />
@@ -73,7 +123,7 @@ export default function Index() {
                 </View>
                 <View className='filter-clear'>
                     <Image src={filter_icon_gray} />
-                    <Text>Xóa lọc</Text>
+                    <Text onClick={clearFilter}>Xóa lọc</Text>
                 </View>
             </View>
             <ScrollView scrollX className='day_picker_container'>
@@ -128,5 +178,9 @@ export default function Index() {
                 ))}
             </View>     
         </ScrollView>
-    )
+    )} else {
+        return(
+            <Filter setDisplaySearch={setRenderSearch} setFilter={setFilterData} />
+        )
+    }
 }

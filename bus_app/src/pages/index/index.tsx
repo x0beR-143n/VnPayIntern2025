@@ -11,7 +11,7 @@ import { Trip } from '../../interfaces/trip'
 import { TripService } from '../../services/TripService' 
 import { LocationService } from '../..//services/LocationService';
 import { getVietnameseDay} from '../../utils/date.util'
-import logo from '../../assets/img/logo.png'
+import logo from '../../assets/img/book.jpg'
 import TripCard from '../../components/TripCard/TripCard';
 import './index.scss'
 
@@ -115,7 +115,7 @@ export default function Index() {
 
         <View className='bg-description'>
           <Text>{day} vui vẻ</Text>
-          <Text style={{marginTop: '-15px'}}>Giảm ngay 50k</Text>
+          <Text style={{marginTop: '-15px'}}>Đặt vé ngay</Text>
         </View>
 
         <View className='vehicle-card'>

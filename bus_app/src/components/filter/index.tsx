@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import Vnmf from '@vnxjs/vnmf';
 import { View, Image, Text, Slider, Button } from '@vnxjs/components'
 import { PiBusThin } from "react-icons/pi";
 import close from '../../assets/icon/ic_close.svg'
-import TimeCard from '../../components/TimeCard/TimeCard'
+import TimeCard from '../TimeCard/TimeCard'
 import { formatCurrencyVND } from '../../utils/date.util'
 import select from '../../assets/icon/ic_select.svg'
 import selected from '../../assets/icon/ic_selected.svg'
@@ -100,7 +99,13 @@ const transportLabels: Record<TransportType, string> = {
   [TransportType.NORMAL]: 'Thường'
 };
 
-export default function Index() {
+interface FilterProp {
+  setDisplaySearch: React.Dispatch<React.SetStateAction<boolean>>;
+  setFilter: React.Dispatch<React.SetStateAction<TripFilter>>;
+}
+
+export default function Filter({setDisplaySearch, setFilter} : FilterProp) {
+
     const [selected_hour, setSelectedHour] = useState<boolean[]>(new Array(4).fill(false));
     const [max_price, setMaxPrice] = useState(100000);
     const [selected_merchant, setSelectedMer] = useState<boolean[]>(new Array(merchants.length).fill(false));
@@ -139,10 +144,7 @@ export default function Index() {
     }
 
     const navigate_to_search = () => {
-        Vnmf.navigateBack({
-                delta: 1
-            }
-        )
+        setDisplaySearch(true);
     }
 
     const handleApply = () => {
@@ -172,6 +174,8 @@ export default function Index() {
             transports: transport_arr.length > 0 ? transport_arr : undefined
         };
         console.log(filterData);
+        setFilter(filterData);
+        setDisplaySearch(true)
     }
 
     return (
