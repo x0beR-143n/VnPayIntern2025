@@ -31,11 +31,27 @@ export class TripService {
   static async getTripsWithFilter(
     page: number = 1,
     limit: number = 10,
-    filter?: TripFilter
+    filter?: TripFilter,
+    criteria?: string,
+    ascending?: boolean
   ): Promise<TripApiResponseSuccess | TripApiResponseFailed> {
     try {
+      const queryParams = new URLSearchParams({
+        page: String(page),
+        limit: String(limit),
+      });
+
+      if (criteria) {
+        queryParams.append('criteria', criteria);
+      }
+
+      if (typeof ascending === 'boolean') {
+        queryParams.append('ascending', String(ascending));
+      
+      }
+
       const res = await Vnmf.request({
-        url: BASE_URL + `/api/trips/filter?page=${page}&limit=${limit}`,
+        url: `${BASE_URL}/api/trips/filter?${queryParams.toString()}`,
         method: 'POST',
         header: {
           'content-type': 'application/json',

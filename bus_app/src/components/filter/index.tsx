@@ -102,9 +102,10 @@ const transportLabels: Record<TransportType, string> = {
 interface FilterProp {
   setDisplaySearch: React.Dispatch<React.SetStateAction<boolean>>;
   setFilter: React.Dispatch<React.SetStateAction<TripFilter>>;
+  setCriteria: React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function Filter({setDisplaySearch, setFilter} : FilterProp) {
+export default function Filter({setDisplaySearch, setFilter, setCriteria} : FilterProp) {
 
     const [selected_hour, setSelectedHour] = useState<boolean[]>(new Array(4).fill(false));
     const [max_price, setMaxPrice] = useState(100000);
@@ -175,6 +176,7 @@ export default function Filter({setDisplaySearch, setFilter} : FilterProp) {
         };
         console.log(filterData);
         setFilter(filterData);
+        setCriteria('');
         setDisplaySearch(true)
     }
 

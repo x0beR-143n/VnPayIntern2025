@@ -162,9 +162,13 @@ app.post('/api/trips/filter', (req, res) => {
             });
         }
 
-        // Lấy filters từ request body
+        // Lấy filters từ body
         const filters = req.body || {};
-        
+
+        // Lấy sort criteria & direction từ query params
+        const criteria = req.query.criteria;
+        const ascending = req.query.ascending === 'true';
+
         // Validate filters
         if (filters.max_price && (typeof filters.max_price !== 'number' || filters.max_price < 0)) {
             return res.status(400).json({
@@ -172,21 +176,21 @@ app.post('/api/trips/filter', (req, res) => {
                 message: 'max_price must be a positive number'
             });
         }
-        
+
         if (filters.start_time && !Array.isArray(filters.start_time)) {
             return res.status(400).json({
                 success: false,
                 message: 'start_time must be an array'
             });
         }
-        
+
         if (filters.merchants && !Array.isArray(filters.merchants)) {
             return res.status(400).json({
                 success: false,
                 message: 'merchants must be an array'
             });
         }
-        
+
         if (filters.transports && !Array.isArray(filters.transports)) {
             return res.status(400).json({
                 success: false,
@@ -194,21 +198,44 @@ app.post('/api/trips/filter', (req, res) => {
             });
         }
 
-        // Filter trips theo các tiêu chí
-        const filteredTrips = filterTrips(tripsData, filters);
+        // Filter trước
+        let filteredTrips = filterTrips(tripsData, filters);
 
-        // Lấy page và limit từ query params
+        // Sort nếu có criteria hợp lệ
+        if (['time', 'price', 'rating'].includes(criteria)) {
+            filteredTrips.sort((a, b) => {
+                let valA, valB;
+
+                if (criteria === 'time') {
+                    // time là chuỗi giờ phút, ví dụ "22:30" → chuyển về phút
+                    const toMinutes = (str) => {
+                        const [h, m] = str.split(':').map(Number);
+                        return h * 60 + m;
+                    };
+                    valA = toMinutes(a.departure_time);
+                    valB = toMinutes(b.departure_time);
+                } else if (criteria === 'price') {
+                    valA = a.fare_amount;
+                    valB = b.fare_amount;
+                } else if (criteria === 'rating') {
+                    valA = a.transport_information.rating;
+                    valB = b.transport_information.rating;
+                }
+                return ascending ? valA - valB : valB - valA;
+            });
+        }
+
+        // Pagination
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
-        
-        // Validate page và limit
+
         if (page < 1) {
             return res.status(400).json({
                 success: false,
                 message: 'Page must be greater than 0'
             });
         }
-        
+
         if (limit < 1 || limit > 100) {
             return res.status(400).json({
                 success: false,
@@ -216,18 +243,16 @@ app.post('/api/trips/filter', (req, res) => {
             });
         }
 
-        // Tính toán pagination
         const totalItems = filteredTrips.length;
         const totalPages = Math.ceil(totalItems / limit);
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
-        
-        // Slice data theo page
+
         const paginatedData = filteredTrips.slice(startIndex, endIndex);
 
         res.status(200).json({
             success: true,
-            message: "Successfully filtered trips data",
+            message: "Successfully filtered and sorted trips data",
             data: paginatedData,
             pagination: {
                 currentPage: page,
@@ -239,7 +264,11 @@ app.post('/api/trips/filter', (req, res) => {
                 startIndex: startIndex + 1,
                 endIndex: Math.min(endIndex, totalItems)
             },
-            filters: filters // Trả về filters đã áp dụng để client biết
+            filters: filters,
+            sort: {
+                criteria: criteria || null,
+                ascending: criteria ? ascending : null
+            }
         });
 
     } catch (error) {
