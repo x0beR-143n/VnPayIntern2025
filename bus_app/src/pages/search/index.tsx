@@ -126,12 +126,13 @@ export default function Index() {
             transports: []  
         }
         setFilterData(newFilterData)
+        showToast(true)
     }
 
     const showToast = (success: boolean) => {
         if(success) {
             Vnmf.showToast({
-                title: 'TÌm kiếm chuyến đi thành công!',
+                title: 'Xóa lọc thành công!',
                 icon: 'success', 
                 duration: 3000  
             })

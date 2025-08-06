@@ -3,9 +3,13 @@ import './app.scss'
 
 class App extends Component<PropsWithChildren> {
 
-  componentDidMount () {}
+  componentDidMount () {
+    console.log("Component about to mount");
+  }
 
-  componentDidShow () {}
+  componentDidShow () {
+    console.log("Component did show here");
+  }
 
   componentDidHide () {}
 

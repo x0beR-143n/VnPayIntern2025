@@ -31,30 +31,42 @@ app.get('/api/trips', (req, res) => {
     try {
         const tripsData = readTripData();
 
-        if(!tripsData) {
+        if (!tripsData) {
             return res.status(500).json({
                 success: false,
-                message: 'Can not fetch trips data',
+                message: 'Cannot fetch trips data',
                 data: []
             });
         }
 
-        // Lấy page và limit từ query params, có default values
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        
-        // Validate page và limit
-        if (page < 1) {
-            return res.status(400).json({
-                success: false,
-                message: 'Page must be greater than 0'
+        const pageParam = req.query.page;
+        const limitParam = req.query.limit;
+
+        // Nếu không có page hoặc limit thì trả về toàn bộ dữ liệu
+        if (!pageParam || !limitParam) {
+            return res.status(200).json({
+                success: true,
+                message: "Successfully get all trips data",
+                data: tripsData,
+                pagination: null
             });
         }
-        
-        if (limit < 1 || limit > 100) {
+
+        // Parse và validate page và limit
+        const page = parseInt(pageParam);
+        const limit = parseInt(limitParam);
+
+        if (isNaN(page) || page < 1) {
             return res.status(400).json({
                 success: false,
-                message: 'Limit must be between 1 and 100'
+                message: 'Page must be a number greater than 0'
+            });
+        }
+
+        if (isNaN(limit) || limit < 1 || limit > 100) {
+            return res.status(400).json({
+                success: false,
+                message: 'Limit must be a number between 1 and 100'
             });
         }
 
@@ -63,13 +75,12 @@ app.get('/api/trips', (req, res) => {
         const totalPages = Math.ceil(totalItems / limit);
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
-        
-        // Slice data theo page
+
         const paginatedData = tripsData.slice(startIndex, endIndex);
 
         res.status(200).json({
             success: true,
-            message: "Successfully get trips data",
+            message: "Successfully get paginated trips data",
             data: paginatedData,
             pagination: {
                 currentPage: page,
@@ -78,7 +89,7 @@ app.get('/api/trips', (req, res) => {
                 itemsPerPage: limit,
                 hasNext: page < totalPages,
                 hasPrev: page > 1,
-                startIndex: startIndex + 1, // +1 để hiển thị cho user (1-based)
+                startIndex: startIndex + 1,
                 endIndex: Math.min(endIndex, totalItems)
             }
         });
@@ -87,11 +98,11 @@ app.get('/api/trips', (req, res) => {
         console.error('Error in /api/trips:', error);
         res.status(500).json({
             success: false,
-            message: 'Server can not get the trips data',
+            message: 'Server cannot get the trips data',
             error: error.message
         });
-    } 
-})
+    }
+});
 
 // Helper function để parse time string thành minutes
 const parseTimeToMinutes = (timeString) => {
