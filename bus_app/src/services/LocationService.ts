@@ -1,7 +1,7 @@
 import Vnmf from "@vnxjs/vnmf";
 import { LocationRequestFailed, LocationRequestSuccess } from "../interfaces/location";
 
-const BASE_URL = 'http://172.20.10.2:5555';
+const BASE_URL = 'http://localhost:5555';
 
 export class LocationService {
     static async getProvinces(): Promise<LocationRequestFailed | LocationRequestSuccess> {

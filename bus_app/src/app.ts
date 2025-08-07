@@ -4,7 +4,7 @@ import './app.scss'
 class App extends Component<PropsWithChildren> {
 
   componentDidMount () {
-    console.log("Component about to mount");
+    console.log("Component did mount");
   }
 
   componentDidShow () {

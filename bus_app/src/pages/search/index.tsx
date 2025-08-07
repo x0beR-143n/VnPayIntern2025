@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Vnmf from "@vnxjs/vnmf";
-import { View, Text, Image, ScrollView, Button } from "@vnxjs/components";
+import Vnmf, {getCurrentInstance} from "@vnxjs/vnmf";
+import { View, Text, Image, ScrollView } from "@vnxjs/components";
 import { MdOutlineKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
 //import local
 import back_icon from '../../assets/icon/ic_back.svg'
@@ -11,12 +11,11 @@ import { Trip } from "../../interfaces/trip";
 import { TripService } from "../../services/TripService";
 import TripCard from "../../components/TripCard/TripCard";
 import './index.scss'
-import Filter from "../../components/filter";
 import { TripFilter } from "../../interfaces/filter";
-import sad from '../../assets/img/sad.png';
+//import sad from '../../assets/img/sad.png';
 
 export default function Index() {    
-    const [renderSearch, setRenderSearch] = useState(true);
+    // biến lọc nhận từ params
     const [filterData, setFilterData] = useState<TripFilter>({
         max_price: 0,
         start_time: [],
@@ -24,19 +23,24 @@ export default function Index() {
         transports: []
     });
     
+    // lấy ngày hiện tại và + thêm 1 tháng vào
+    const day_of_week_str = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+
     const days: number[] = [];
-    const days_str : string[] = [];
-    const day_of_week = ["T6", "T7", "CN", "T2", "T3", "T4", "T5"];
-    let d_index = 0;    
-    for(let i = 17; i <= 30; i++) {
-        days.push(i);
-        days_str.push(day_of_week[d_index]);
-        d_index++;
-        if(d_index > 6) {
-            d_index = 0;
-        }
+    const days_str: string[] = [];
+
+    const today = new Date();
+    const oneMonthLater = new Date(today);
+    oneMonthLater.setMonth(today.getMonth() + 1);
+
+    let current = new Date(today);
+    while (current <= oneMonthLater) {
+        days.push(current.getDate());
+        days_str.push(day_of_week_str[current.getDay()]);
+        current.setDate(current.getDate() + 1);
     }
 
+    // khai báo các biến liên quan đến sắp xếp và hiển thị tríp
     const [selected_date, setSelectedDate] = useState(3);
     const [selected_button, setSelectedButton] = useState(0);
     const [trips, setTrips] = useState<Trip[]>([])
@@ -45,6 +49,23 @@ export default function Index() {
     const [criteria, setCriteria] = useState('');
     const [ascending, setAscending] = useState(true);
 
+    // lấy params từ url để set cho filterData
+    useEffect(() => {
+        const router = getCurrentInstance().router;
+        const encoded = router?.params?.filter;
+        if (encoded) {
+        try {
+            const decoded = decodeURIComponent(encoded);
+            const parsed: TripFilter = JSON.parse(decoded);
+            console.log('✅ TripFilter received:', parsed);
+            setFilterData(parsed);
+        } catch (err) {
+            console.error('❌ Failed to parse filter', err);
+        }
+        }
+    }, [])
+
+    // lấy trips với filterData và criteria và ascending
     useEffect(() => {
         const fetchTrips = async () => {
           const res = await TripService.getTripsWithFilter(1, 15, filterData, criteria, ascending);
@@ -63,6 +84,7 @@ export default function Index() {
         fetchTrips()
     }, [filterData, criteria, ascending])
     
+    // lấy dữ liệu mới với page ++
     const fetchNewData = async () => {
       const res = await TripService.getTripsWithFilter(page, 15, filterData, criteria, ascending);
       if (res.success) {
@@ -80,17 +102,21 @@ export default function Index() {
       }
     }
 
+    // chuyển sang trang filter
     const navigateToFilter = () => {
-        setRenderSearch(false);
-        setSelectedButton(4);
+        Vnmf.navigateTo({
+            url: 'pages/filter/index',
+        })
     }
 
+    // chuyển sang trang home
     const navigateToHome = () => {
         Vnmf.navigateBack({
             delta: 1
         })
     }
 
+    // Thay đổi tiêu chí sắp xếp
     const setButtonAction = (index:number, current_criteria: string) => {
         if(index === selected_button) {
             const newAscending = !ascending;
@@ -102,10 +128,12 @@ export default function Index() {
         }
     }
     
+    // hiển thị ngày được chọn
     const setDateAction = (index: number) => {
         setSelectedDate(index);
     }
 
+    // kiểm tra để lấy dữ liệu mới
     const onSCroll = (e) => {
         let max_height = e.detail.scrollHeight;
         let current_height = e.detail.scrollTop;
@@ -118,17 +146,12 @@ export default function Index() {
         }
     }
 
+    // xóa filter
     const clearFilter = () => {
-        const newFilterData = {
-            max_price: 0,
-            start_time: [],
-            merchants: [],
-            transports: []  
-        }
-        setFilterData(newFilterData)
-        showToast(true)
+        showToast(true);
     }
 
+    // hiển thị toast mà thôi
     const showToast = (success: boolean) => {
         if(success) {
             Vnmf.showToast({
@@ -146,7 +169,6 @@ export default function Index() {
         
     }
 
-    if(renderSearch) { 
     return (
         <ScrollView className='scroll-view' scrollY scrollWithAnimation onScroll={onSCroll}>
             <View className='search_header'> 
@@ -164,14 +186,14 @@ export default function Index() {
             </View> 
             <ScrollView scrollX className='day_picker_container'>
                 {days.map((day, index) => (
-                    <DateCard key={index} day={day} month={3} day_of_week={days_str[index]} is_selected={index === selected_date} onClick={() => setDateAction(index)} />    
+                    <DateCard key={index} day={day} month={today.getMonth() + 1} day_of_week={days_str[index]} is_selected={index === selected_date} onClick={() => setDateAction(index)} />    
                 ))}
             </ScrollView>  
             <View className='button_container'>
                 <View>
-                    <Button
+                    <View 
                       onClick={() => setButtonAction(1, 'time')}
-                      className={selected_button === 1 ? 'chosen_button' : 'unchosen_button'}
+                      className={selected_button === 1 ? 'chosen_button sort_button' : 'unchosen_button sort_button'}
                     >
                         Giờ chạy
                         {selected_button === 1 &&
@@ -180,12 +202,12 @@ export default function Index() {
                         ) : (
                             <MdOutlineKeyboardArrowDown />
                         ))}
-                    </Button>
+                    </View>
                 </View>
                 <View>
-                    <Button
+                    <View
                       onClick={() => setButtonAction(2, 'price')}
-                      className={selected_button === 2 ? 'chosen_button' : 'unchosen_button'}
+                      className={selected_button === 2 ? 'chosen_button sort_button' : 'unchosen_button sort_button'}
                     >
                         Giá vé
                         {selected_button === 2 &&
@@ -194,12 +216,12 @@ export default function Index() {
                         ) : (
                             <MdOutlineKeyboardArrowDown />
                         ))}
-                    </Button>
+                    </View>
                 </View>
                 <View>
-                    <Button
+                    <View
                       onClick={() => setButtonAction(3, 'rating')}
-                      className={selected_button === 3 ? 'chosen_button' : 'unchosen_button'}
+                      className={selected_button === 3 ? 'chosen_button sort_button' : 'unchosen_button sort_button'}
                     >
                         Đánh giá
                         {selected_button === 3 &&
@@ -208,12 +230,12 @@ export default function Index() {
                         ) : (
                             <MdOutlineKeyboardArrowDown />
                         ))}
-                    </Button>                
+                    </View>                
                 </View>
                 <View>
-                    <Button
+                    <View
                       onClick={() => navigateToFilter()}
-                      className={selected_button === 4 ? 'chosen_button' : 'unchosen_button'}
+                      className='filter_button'
                     >
                         Lọc
                     {selected_button === 4 ? (
@@ -222,25 +244,15 @@ export default function Index() {
                          <Image src={filter_icon_gray} className='filter-ic' />
                     )}
                         
-                    </Button>
+                    </View>
                 </View>
             </View>     
 
             <View className='trips-card-container'>
-                {trips.length === 0 ? (
-                    <Text className='empty-trips'>Hiện chưa có chuyến xe nào phù hợp với bạn
-                        <Image src={sad} className='sad-pic' />
-                    </Text>
-                ) : (
-                    trips.map((trip, index) => (
-                    <TripCard trip={trip} key={index} />
-                    ))
-                )}
+                {trips.map((trip, index) => (
+                        <TripCard trip={trip} key={index} />
+                ))}
             </View>     
         </ScrollView>
-    )} else {
-        return(
-            <Filter setDisplaySearch={setRenderSearch} setFilter={setFilterData} setCriteria={setCriteria} />
-        )
-    }
+    )
 }
