@@ -17,7 +17,7 @@ import './index.scss'
 
 
 export default function Index() {
-  
+  sessionStorage.clear();
   const day = getVietnameseDay();
 
   const [trips, setTrips] = useState<Trip[]>([]);

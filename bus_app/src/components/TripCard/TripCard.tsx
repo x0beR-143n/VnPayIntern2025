@@ -16,8 +16,6 @@ interface TripCardProps {
 export default function TripCard({ trip }: TripCardProps) {
     return (
         <View className='trip-card'>
-            <View className='left-circle'></View>
-            <View className='right-circle'></View>
             <View className='departure-and-duration'>
               <View className='departure-time'>
                 <Text>{trip.departure_time}</Text>
@@ -68,14 +66,17 @@ export default function TripCard({ trip }: TripCardProps) {
               </View>
             </View>
             
-            <svg width='100%' height='5' className='dash-separator'>
-              <line x1='0' y1='0' x2='100%' y2='0'
-                stroke='#999999'
-                strokeWidth='1'
-                strokeDasharray='10,5'
-              />
-            </svg>
-
+            <View className='circle-n-separator'>
+              <View className='left-circle'></View>
+              <View className='right-circle'></View>
+              <svg width='100%' height='5' className='dash-separator'>
+                <line x1='0' y1='0' x2='100%' y2='0'
+                  stroke='#999999'
+                  strokeWidth='1'
+                  strokeDasharray='10,5'
+                />
+              </svg>
+            </View>
             <View className='price_seat_continue_button'>
               <View className='price_and_seat'>
                 <Text className='price_seat_font_w'>Từ <Text className='price'>{formatCurrencyVND(trip.fare_amount)}</Text></Text>

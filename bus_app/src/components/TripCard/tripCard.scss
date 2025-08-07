@@ -6,27 +6,6 @@
     padding: 30px 40px 30px 40px;
     width: 80%;
     margin: auto;
-    position: relative;
-}
-
-.right-circle {
-    background-color: rgb(240, 240, 240);
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 99px;
-    top: 65%;
-    left: -25px;
-}
-
-.left-circle {
-    background-color: rgb(240, 240, 240);
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border-radius: 99px;
-    top: 65%;
-    right: -25px;
 }
 
 .departure-and-duration {
@@ -164,7 +143,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 
 .price_seat_font_w {
@@ -190,10 +169,33 @@
     font-size: 25px;
 }
 
+.circle-n-separator {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 35px;
+    position: relative;
+}
+
+.right-circle {
+    background-color: rgb(240, 240, 240);
+    width: 50px;
+    height: 50px;
+    border-radius: 99px;
+    margin-right: -65px;
+}
+
 .dash-separator {
-    width: 90%;
     position: absolute;
-    top: 71%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.left-circle {
+    background-color: rgb(240, 240, 240);
+    width: 50px;
+    height: 50px;
+    border-radius: 99px;
+    margin-left: -65px;
 }

@@ -40,14 +40,39 @@ export default function Index() {
         current.setDate(current.getDate() + 1);
     }
 
-    // khai báo các biến liên quan đến sắp xếp và hiển thị tríp
+    // khai báo các biến liên quan đến sắp xếp và hiển thị trips
+    const [scrollTop, setScrollTop] = useState(0);
     const [selected_date, setSelectedDate] = useState(3);
     const [selected_button, setSelectedButton] = useState(0);
     const [trips, setTrips] = useState<Trip[]>([])
     const [page, setPage] = useState(1);
     const [canGetNewData, setCanGetNewData] = useState(true);
-    const [criteria, setCriteria] = useState('');
-    const [ascending, setAscending] = useState(true);
+    const [criteria, setCriteria] = useState(() => {
+        let tmp_criteria = sessionStorage.getItem('criteria');
+        if(!tmp_criteria) {
+            return '';
+        }
+        if(tmp_criteria === 'time') {
+            setSelectedButton(1)
+        }
+        if(tmp_criteria === 'price') {
+            setSelectedButton(2)
+        }
+        if(tmp_criteria === 'rating') {
+            setSelectedButton(3)
+        }
+        return tmp_criteria;
+    });
+
+    const [ascending, setAscending] = useState(() => {
+        const asc = sessionStorage.getItem('ascending');
+        return asc !== null ? asc === 'true' : true;
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem('criteria', criteria);
+        sessionStorage.setItem('ascending', ascending.toString());
+    }, [criteria, ascending]);
 
     // lấy params từ url để set cho filterData
     useEffect(() => {
@@ -76,6 +101,7 @@ export default function Index() {
                 showToast(false);
             }
             setTrips(res.data);
+            setScrollTop(0)
           } else {
             console.error('Failed to fetch trips:', res.message)
           }
@@ -111,8 +137,8 @@ export default function Index() {
 
     // chuyển sang trang home
     const navigateToHome = () => {
-        Vnmf.navigateBack({
-            delta: 1
+        Vnmf.navigateTo({
+            url: 'pages/index/index'
         })
     }
 
@@ -137,6 +163,7 @@ export default function Index() {
     const onSCroll = (e) => {
         let max_height = e.detail.scrollHeight;
         let current_height = e.detail.scrollTop;
+        setScrollTop(current_height);
         if(max_height - current_height <= 2500) {
             if(canGetNewData) {
                 setCanGetNewData(false);
@@ -149,6 +176,10 @@ export default function Index() {
     // xóa filter
     const clearFilter = () => {
         showToast(true);
+        sessionStorage.clear();
+        Vnmf.redirectTo({
+            url: 'pages/search/index'
+        })
     }
 
     // hiển thị toast mà thôi
@@ -170,7 +201,8 @@ export default function Index() {
     }
 
     return (
-        <ScrollView className='scroll-view' scrollY scrollWithAnimation onScroll={onSCroll}>
+       <View>
+        <View className='header'>
             <View className='search_header'> 
                 <View className='trip_name_n_back'>
                     <Image src={back_icon} className='back_ic' onClick={navigateToHome} />
@@ -247,12 +279,14 @@ export default function Index() {
                     </View>
                 </View>
             </View>     
-
-            <View className='trips-card-container'>
-                {trips.map((trip, index) => (
-                        <TripCard trip={trip} key={index} />
-                ))}
-            </View>     
-        </ScrollView>
+        </View>
+            <ScrollView className='scroll-view' scrollY scrollWithAnimation onScroll={onSCroll} scrollTop={scrollTop}>
+                <View className='trips-card-container'>
+                    {trips.map((trip, index) => (
+                            <TripCard trip={trip} key={index} />
+                    ))}
+                </View>     
+            </ScrollView>
+        </View>
     )
 }

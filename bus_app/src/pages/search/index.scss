@@ -3,6 +3,10 @@
     height: 100vh;
 }
 
+.header {
+    background-color: rgb(240, 240, 240);
+}
+
 .search_header {
     display: flex;
     justify-content: space-between;
@@ -61,6 +65,7 @@
     align-items: center;
     justify-content: center;
     column-gap: 30px;
+    padding-bottom: 50px;
 }
 
 .unchosen_button {
@@ -104,7 +109,6 @@
 }
 
 .trips-card-container {
-    margin-top: 50px;
     display: flex;
     flex-direction: column;
     row-gap: 30px;
