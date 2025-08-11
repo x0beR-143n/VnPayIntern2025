@@ -1,0 +1,49 @@
+.ticket-types-wrapper {
+    display: flex;
+    column-gap: 150px;
+    flex-wrap: wrap;
+    background-color: #e3e3e3;
+    padding: 30px;
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 35px;
+}
+
+.ticket-info {
+    display: flex;
+    align-items: flex-start;    
+    column-gap: 15px;
+}
+
+.ticket-color {
+    margin-top: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    background-color: red;
+}
+
+.ticket-price-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0px;
+}
+
+.ticket-name {
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.ticket-original-price {
+    font-size: 20px;
+    text-decoration: line-through;
+    font-weight: 600;
+    color: gray;
+}
+
+.ticket-price {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(0, 195, 0);
+}
