@@ -7,6 +7,7 @@ import { ApiResponse } from '../../interfaces/seat'
 import TicketTypes from '../../components/TicketTypes/TicketTypes';
 import { formatDateTime } from '../../utils/format';
 import screen from '../../assets/icon/ic_screen_seatmap.svg'
+import SeatMap from '../../components/Seats/SeatMap';
 import './index.scss'
 
 export default function Index() {
@@ -60,8 +61,9 @@ export default function Index() {
         </View>
         <View className='screen'>
           <Image src={screen} />
+          <SeatMap seats={data.seats} />
         </View>
-      </View>
+      </View> 
     )
   }
 }

@@ -51,11 +51,6 @@ const transportLabels: Record<TransportType, string> = {
     [TransportType.NORMAL]: 'Thường'
 };
 
-function buildTripFilterParam(filter: TripFilter): string {
-    const encoded = encodeURIComponent(JSON.stringify(filter))
-    return `filter=${encoded}`
-}
-
 export default function Filter() {
 
     const [selected_hour, setSelectedHour] = useState<boolean[]>(new Array(4).fill(false));
@@ -157,17 +152,13 @@ export default function Filter() {
         selected_transport.forEach((transport, index) => {
             if (transport) transport_arr.push(transports[index]);
         });
-
         const filterData: TripFilter = {
             max_price: current_max_price === 100000 ? undefined : current_max_price,
             start_time: start_arr.length > 0 ? start_arr : undefined,
             merchants: merchant_id_arr.length > 0 ? merchant_id_arr : undefined,
             transports: transport_arr.length > 0 ? transport_arr : undefined
         };
-        const filterParam = buildTripFilterParam(filterData);
-        Vnmf.navigateTo({
-            url: `pages/search/index?${filterParam}`,
-        });
+        Vnmf.navigateBack({ delta: 1 });
     };
 
     return (

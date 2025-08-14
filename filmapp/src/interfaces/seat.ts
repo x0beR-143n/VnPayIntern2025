@@ -3,7 +3,7 @@
 export interface Session {
   roomName: string;
   maxSeats: number;
-  cinemaName: string;
+  cinemaName: string; 
   cinemaGroupName: string;
   filmName: string;
   filmNameEn: string;
