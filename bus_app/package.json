@@ -36,6 +36,7 @@
   "author": "vnpaycode",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
+    "@reduxjs/toolkit": "^2.8.2",
     "@vnxjs/components": "3.5.66",
     "@vnxjs/helper": "3.5.66",
     "@vnxjs/plugin-framework-react": "3.5.66",
@@ -53,7 +54,8 @@
     "@vnxjs/vnmf-h5": "3.5.66",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-icons": "^5.5.0"
+    "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

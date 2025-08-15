@@ -292,6 +292,66 @@ app.post('/api/trips/filter', (req, res) => {
     }
 });
 
+app.post('/api/filter', (req, res) => {
+try {
+        const tripsData = readTripData();
+
+        if (!tripsData) {
+            return res.status(500).json({
+                success: false,
+                message: 'Can not fetch trips data',
+                data: []
+            });
+        }
+
+        // Lấy filters từ body
+        const filters = req.body || {};
+
+        // Validate filters
+        if (filters.max_price && (typeof filters.max_price !== 'number' || filters.max_price < 0)) {
+            return res.status(400).json({
+                success: false,
+                message: 'max_price must be a positive number'
+            });
+        }
+
+        if (filters.start_time && !Array.isArray(filters.start_time)) {
+            return res.status(400).json({
+                success: false,
+                message: 'start_time must be an array'
+            });
+        }
+
+        if (filters.merchants && !Array.isArray(filters.merchants)) {
+            return res.status(400).json({
+                success: false,
+                message: 'merchants must be an array'
+            });
+        }
+
+        if (filters.transports && !Array.isArray(filters.transports)) {
+            return res.status(400).json({
+                success: false,
+                message: 'transports must be an array'
+            });
+        }
+
+        // Filter trước
+        let filteredTrips = filterTrips(tripsData, filters);
+
+        const totalItems = filteredTrips.length;
+       
+        res.status(200).json(totalItems);
+
+    } catch (error) {
+        console.error('Error in /api/filter:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server can not filter the trips data',
+            error: error.message
+        });
+    }
+}) 
 
 app.get('/api/summary', (req, res) => {
     const trips = readTripData();

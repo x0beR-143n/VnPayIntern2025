@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import Vnmf, {getCurrentInstance} from "@vnxjs/vnmf";
+import { Provider, useSelector } from 'react-redux';
+import Vnmf from "@vnxjs/vnmf";
 import { View, Text, Image, ScrollView } from "@vnxjs/components";
 import { MdOutlineKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
 //import local
+import { store, RootState } from '../../store/index';
 import back_icon from '../../assets/icon/ic_back.svg'
 import filter_icon_gray from '../../assets/icon/ic_filter_grey.svg'
 import filter_icon_white from '../../assets/icon/ic_filter_white.svg'
@@ -11,17 +13,12 @@ import { Trip } from "../../interfaces/trip";
 import { TripService } from "../../services/TripService";
 import TripCard from "../../components/TripCard/TripCard";
 import './index.scss'
-import { TripFilter } from "../../interfaces/filter";
+//import { TripFilter } from "../../interfaces/filter";
 //import sad from '../../assets/img/sad.png';
 
-export default function Index() {    
+function SearchPage() {    
     // biến lọc nhận từ params
-    const [filterData, setFilterData] = useState<TripFilter>({
-        max_price: 0,
-        start_time: [],
-        merchants: [],
-        transports: []
-    });
+    const filterData = useSelector((state: RootState) => state.filter);
     
     // lấy ngày hiện tại và + thêm 1 tháng vào
     const day_of_week_str = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
@@ -73,22 +70,6 @@ export default function Index() {
         sessionStorage.setItem('criteria', criteria);
         sessionStorage.setItem('ascending', ascending.toString());
     }, [criteria, ascending]);
-
-    // lấy params từ url để set cho filterData
-    useEffect(() => {
-        const router = getCurrentInstance().router;
-        const encoded = router?.params?.filter;
-        if (encoded) {
-        try {
-            const decoded = decodeURIComponent(encoded);
-            const parsed: TripFilter = JSON.parse(decoded);
-            console.log('✅ TripFilter received:', parsed);
-            setFilterData(parsed);
-        } catch (err) {
-            console.error('❌ Failed to parse filter', err);
-        }
-        }
-    }, [])
 
     // lấy trips với filterData và criteria và ascending
     useEffect(() => {
@@ -167,7 +148,6 @@ export default function Index() {
         if(max_height - current_height <= 2500) {
             if(canGetNewData) {
                 setCanGetNewData(false);
-                setCanGetNewData(false);
                 fetchNewData();
             }
         }
@@ -175,11 +155,7 @@ export default function Index() {
 
     // xóa filter
     const clearFilter = () => {
-        showToast(true);
-        sessionStorage.clear();
-        Vnmf.redirectTo({
-            url: 'pages/search/index'
-        })
+        
     }
 
     // hiển thị toast mà thôi
@@ -289,4 +265,12 @@ export default function Index() {
             </ScrollView>
         </View>
     )
+}
+
+export default function Index() {
+  return (
+    <Provider store={store}>
+      <SearchPage />
+    </Provider>
+  );
 }

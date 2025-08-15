@@ -1,4 +1,4 @@
-import Filter from "../../components/filter_fe";
+import Filter from "../../components/filter";
 
 export default function Index() {
     return (
