@@ -118,8 +118,9 @@ function SearchPage() {
 
     // chuyển sang trang home
     const navigateToHome = () => {
-        Vnmf.navigateTo({
-            url: 'pages/index/index'
+        sessionStorage.clear();
+        Vnmf.navigateBack({
+            delta: 1,
         })
     }
 

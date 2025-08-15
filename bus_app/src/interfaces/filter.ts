@@ -14,6 +14,7 @@ export enum TransportType {
 
 export interface TripFilter {
     max_price?: number; 
+    min_price?: number;
     start_time?: StartTime[];
     merchants?: number[];
     transports?: TransportType[];

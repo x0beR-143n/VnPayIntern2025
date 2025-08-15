@@ -52,6 +52,7 @@
     "@vnxjs/shared": "3.5.66",
     "@vnxjs/vnmf": "3.5.66",
     "@vnxjs/vnmf-h5": "3.5.66",
+    "rc-slider": "^11.1.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-icons": "^5.5.0",

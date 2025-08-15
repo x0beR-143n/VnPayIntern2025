@@ -128,7 +128,7 @@ const isTimeInRange = (timeString, startTime) => {
 const filterTrips = (trips, filters) => {
     return trips.filter(trip => {
         // Filter theo max_price
-        if (filters.max_price && trip.fare_amount > filters.max_price) {
+        if (filters.max_price && filters.min_price && (trip.fare_amount < filters.min_price || trip.fare_amount > filters.max_price)) {
             return false;
         }
         

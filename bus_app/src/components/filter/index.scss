@@ -100,3 +100,37 @@
     background-color: #3556d8;
     color: white;
 }
+
+.rc-slider {
+  height: 12px; /* tăng chiều cao tổng thể */
+  margin-top: 20px;
+}
+
+.rc-slider-rail {
+  background-color: #e0e0e0; /* màu nền của rail */
+  height: 12px;
+  border-radius: 6px; /* bo góc */
+}
+
+.rc-slider-track {
+  background-color: #3556d8; /* màu đoạn được chọn */
+  height: 12px;
+  border-radius: 6px;
+}
+
+.rc-slider-handle {
+  border: none;
+  width: 28px; /* tăng kích thước nút */
+  height: 28px;
+  background-color: #0026be;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+  margin-top: -8px; /* căn giữa nút với thanh */
+  border-radius: 50%;
+  cursor: grab;
+  transition: transform 0.15s ease;
+}
+
+.rc-slider-handle:active {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1); /* hiệu ứng phóng nhẹ khi kéo */
+}

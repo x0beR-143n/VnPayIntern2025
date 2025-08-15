@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Vnmf from '@vnxjs/vnmf';
 import { Provider, useDispatch } from 'react-redux';
-import { View, Image, Text, Slider, Button, ScrollView } from '@vnxjs/components'
+import { View, Image, Text, Button, ScrollView } from '@vnxjs/components'
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 import { PiBusThin } from "react-icons/pi";
 import { store } from '../../store/index';
 import { setFilter } from '../../store/slices/fitlerSlices';
@@ -12,8 +14,8 @@ import select from '../../assets/icon/ic_select.svg'
 import selected from '../../assets/icon/ic_selected.svg'
 import { TripFilter, StartTime, TransportType } from '../../interfaces/filter';
 import { TripService } from '../../services/TripService';
-import { TripApiResponseFailed } from '../../interfaces/trip';
 import './index.scss'
+
 
 const STORAGE_KEY = "trip_filter_state";
  
@@ -59,30 +61,31 @@ const transportLabels: Record<TransportType, string> = {
 function FilterContent() {
 
     const [selected_hour, setSelectedHour] = useState<boolean[]>(new Array(4).fill(false));
-    const [max_price, setMaxPrice] = useState(100000);
+    const [priceRange, setPriceRange] = useState<number | number[]>([100000, 900000]);
     const [selected_merchant, setSelectedMer] = useState<boolean[]>(new Array(merchants.length).fill(false));
     const [selected_transport, setSelectedTransport] = useState<boolean[]>(new Array(transports.length).fill(false));
     const [numberOfOptions, setNummberOptions] = useState(-1);
 
-    const debounceRef = useRef<NodeJS.Timeout | null>(null);
-
     const [changeData, setChangData] = useState(true);
 
+    //get state from session storage
     useEffect(() => {
         const saved = sessionStorage.getItem(STORAGE_KEY);
         if (saved) {
             try {
                 const parsed = JSON.parse(saved);
                 if (parsed.selected_hour) setSelectedHour(parsed.selected_hour);
-                if (parsed.max_price) setMaxPrice(parsed.max_price);
+                if (parsed.min_price !== undefined && parsed.max_price !== undefined) {
+                    setPriceRange([parsed.min_price, parsed.max_price]);
+                }
                 if (parsed.selected_merchant) setSelectedMer(parsed.selected_merchant);
                 if (parsed.selected_transport) setSelectedTransport(parsed.selected_transport);
+                setChangData(!changeData)
             } catch (e) {
                 console.error("Error parsing saved filter", e);
             }
         }
     }, []);
-
     
     useEffect(() => {
         const fetchTripsLength = async () => {
@@ -90,28 +93,29 @@ function FilterContent() {
             const res = await TripService.getFilterLength(filterData);
             setNummberOptions(res);
         }
-        
         fetchTripsLength();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [changeData])
 
 
-    const saveFilterToStorage = (hour, price, merchant, transport) => {
+    const saveFilterToStorage = (hour, min_price, max_price, merchant, transport, ) => {
         sessionStorage.setItem(
             STORAGE_KEY,
             JSON.stringify({
                 selected_hour: hour,
-                max_price: price,
+                max_price: max_price,
+                min_price: min_price,
                 selected_merchant: merchant,
-                selected_transport: transport
+                selected_transport: transport,
             })
         );
     };
 
     const handleClickHourCard = (index: number) => {
-        let tmp_arr = [...selected_hour];
+        let tmp_arr = [...selected_hour];        
         tmp_arr[index] = !tmp_arr[index];
         setSelectedHour(tmp_arr);
-        saveFilterToStorage(tmp_arr, max_price, selected_merchant, selected_transport);
+        saveFilterToStorage(tmp_arr, priceRange[0], priceRange[1] , selected_merchant, selected_transport);
         setChangData(!changeData);
     };
 
@@ -119,7 +123,7 @@ function FilterContent() {
         let tmp_arr = [...selected_merchant];
         tmp_arr[index] = !tmp_arr[index];
         setSelectedMer(tmp_arr);
-        saveFilterToStorage(selected_hour, max_price, tmp_arr, selected_transport);
+        saveFilterToStorage(selected_hour, priceRange[0], priceRange[1] , tmp_arr, selected_transport);
         setChangData(!changeData);
     };
 
@@ -127,22 +131,8 @@ function FilterContent() {
         let tmp_arr = [...selected_transport];
         tmp_arr[index] = !tmp_arr[index];
         setSelectedTransport(tmp_arr);
-        saveFilterToStorage(selected_hour, max_price, selected_merchant, tmp_arr);
+        saveFilterToStorage(selected_hour, priceRange[0], priceRange[1] , selected_merchant, tmp_arr);
         setChangData(!changeData);
-    };
-
-    // Debounce cho slider
-    const handleMaxPriceChange = (e) => {
-        const value = e.detail.value;
-        setMaxPrice(value);
-
-        if (debounceRef.current) {
-            clearTimeout(debounceRef.current);
-        }
-        debounceRef.current = setTimeout(() => {
-            setChangData(!changeData);
-            saveFilterToStorage(selected_hour, value, selected_merchant, selected_transport);
-        }, 300); // delay 300ms sau khi dừng kéo
     };
 
     const clearFilter = () => {
@@ -150,7 +140,7 @@ function FilterContent() {
         const trans_arr = new Array(transports.length).fill(false);
         const time_arr = new Array(timePeriods.length).fill(false);
 
-        setMaxPrice(100000);
+        setPriceRange([100000, 900000])
         setSelectedHour(time_arr);
         setSelectedMer(mer_arr);
         setSelectedTransport(trans_arr);
@@ -165,7 +155,8 @@ function FilterContent() {
     const dispatch = useDispatch();
 
     const getFilterData = () => {
-        let current_max_price = max_price;
+        let current_min_price = priceRange[0];
+        let current_max_price = priceRange[1];
         let start_arr: StartTime[] = [];
         selected_hour.forEach((hour, index) => {
             if (hour) start_arr.push(timePeriods[index]);
@@ -179,7 +170,8 @@ function FilterContent() {
             if (transport) transport_arr.push(transports[index]);
         });
         const filterData: TripFilter = {
-            max_price: current_max_price === 100000 ? undefined : current_max_price,
+            max_price: current_max_price,
+            min_price: current_min_price,
             start_time: start_arr.length > 0 ? start_arr : undefined,
             merchants: merchant_id_arr.length > 0 ? merchant_id_arr : undefined,
             transports: transport_arr.length > 0 ? transport_arr : undefined
@@ -189,6 +181,7 @@ function FilterContent() {
 
     const handleApply = () => {
         const filterData = getFilterData();
+        console.log(filterData);
         dispatch(setFilter(filterData))
         Vnmf.navigateBack({ delta: 1 });
     };
@@ -219,10 +212,17 @@ function FilterContent() {
                 </View>
                 <View className='filter-body-items'>
                     <Text className='filter-title-text'>Khoảng giá</Text>
-                    <Text className='max_price'>Lựa chọn khoảng giá của bạn: 100,000đ - <Text>{formatCurrencyVND(max_price)}</Text></Text>
-                    <Slider step={100000} min={100000} className='slider'
-                      max={3000000} blockSize={22} handleSize='2' activeColor='#3556d8' blockColor='#3556d8'
-                      onChanging={handleMaxPriceChange} value={max_price}
+                    <Text className='max_price'>Lựa chọn khoảng giá của bạn: <Text>{formatCurrencyVND(priceRange[0])}</Text> - <Text>{formatCurrencyVND(priceRange[1])}</Text></Text>
+                    <Slider
+                      range
+                      min={100000}
+                      max={900000}
+                      value={priceRange}
+                      onChange={(val) => {
+                        setPriceRange(val);
+                        saveFilterToStorage(selected_hour, val[0], val[1], selected_merchant, selected_transport);
+                        setChangData(!changeData);
+                      }}
                     />
                 </View>
                 <View className='filter-body-items'>
