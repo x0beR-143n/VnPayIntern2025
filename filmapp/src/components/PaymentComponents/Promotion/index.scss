@@ -1,0 +1,155 @@
+input {
+    border-radius: 30px;
+    background-color: rgb(239, 239, 239);
+    padding: 10px 20px 10px 55px;
+    width: 300px;   
+}
+
+input::placeholder {
+    font-weight: 20px;
+}
+
+.input-container {
+    position: relative;
+
+    input {
+      padding-right: 60px;
+      width: 270px;
+    }
+}
+
+.voucher-img {
+  position: absolute;
+  top: 11px;
+  left: 5px;
+}
+
+.clear-code {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  width: 50px;
+}
+
+.promotion-container {
+    width: 100%;
+    display: flex;
+    column-gap: 50px;
+    margin-top: 50px;
+}
+
+.promotion-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    width: 500px;
+    height: 250px;
+    flex-shrink: 0;   
+    border: 5px solid rgb(239, 239, 239);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px 20px 30px;
+    border-radius: 30px;
+    position: relative;
+}
+
+.border-green {
+  border: 5px solid #39b795;
+}
+
+.p-description {
+    font-weight: 700;
+    font-size: 35px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;   /* số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.p-information {
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.p-expiry {
+    font-size: 25px;
+    color: gray;
+}
+
+.apply-text {
+    color: rgb(0, 0, 175);
+    font-weight: 700;
+    font-size: 30px;
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+}
+
+.error-text {
+    color: red;
+    font-size: 25px;
+}
+
+.payment-note-separator {
+    width: 110%;
+    height: 1px;
+    background-color: black;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: -30px;
+}
+
+.payment-note {
+  margin-top: 20px;
+  color: gray;
+  font-size: 28px;
+  line-height: 1.6;
+}
+
+.note-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+.note-star {
+  color: red;
+  margin-right: 4px;
+}
+
+.note-item {
+  margin-bottom: 4px;
+  display: block;
+}
+
+.note-bold {
+  color: black;
+  font-weight: 600;
+}
+
+.note-hotline {
+  color: rgb(0, 0, 175);
+  font-weight: 600;
+}
+
+.voucher-code {
+  color: white;
+  background-color: #39b795;
+  width: fit-content;
+  border-radius: 30px;
+  padding: 7px 15px 5px 15px;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.voucher-code-separator {
+  background-color: white;
+  width: 2px;
+  height: 23px;
+  margin-left: 10px;
+  margin-right: 8px;
+}
+

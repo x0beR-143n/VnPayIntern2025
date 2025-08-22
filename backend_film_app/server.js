@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const { count } = require('console');
 
 const app = express();
 const PORT = 5555;
@@ -26,6 +25,37 @@ const readFilmData = () => {
     }
 }
 
+// Hàm đọc dữ liệu từ file promotion.json
+const readPromotionData = () => {
+    try {
+        const filePath = path.join(__dirname, 'promotion.json');
+        const rawData = fs.readFileSync(filePath, 'utf8');
+        const jsonData = JSON.parse(rawData);
+        
+        // Trả về phần dữ liệu promotions thực sự
+        return jsonData.data.json.data.promotions;
+    } catch(error) {
+        console.error("Error reading promotion data: ", error);
+        return null;
+    }
+}
+
+// Hàm đọc dữ liệu từ file food.json
+const readFoodData = () => {
+    try {
+        const filePath = path.join(__dirname, 'food.json');
+        const rawData = fs.readFileSync(filePath, 'utf8');
+        const jsonData = JSON.parse(rawData);
+        
+        // Trả về phần dữ liệu items thực sự
+        return jsonData.coreData.data.items;
+    } catch(error) {
+        console.error("Error reading food data: ", error);
+        return null;
+    }
+}
+
+
 app.get('/api/films', (req, res) => {
     try {
         const filmData = readFilmData();
@@ -38,13 +68,10 @@ app.get('/api/films', (req, res) => {
             });
         }
 
-        // Giả sử dữ liệu seatmap.json là 1 object duy nhất
-        // Nếu là mảng phim thì cần map qua từng phim
         const session = filmData.sessionInfo || {};
         const ticketTypes = filmData.ticketTypes || [];
         const seatsRaw = filmData.seats || [];
 
-        // Gọn hóa thông tin suất chiếu
         const sessionInfo = {
             roomName: session.roomName,
             maxSeats: filmData.maxSeats,
@@ -60,7 +87,6 @@ app.get('/api/films', (req, res) => {
             poster: session.poster
         };
 
-        // Gọn hóa loại vé
         const ticketTypesData = ticketTypes.map(tt => ({
             id: tt.id,
             name: tt.nameVi,
@@ -70,20 +96,17 @@ app.get('/api/films', (req, res) => {
             ishow_orgPrice: tt.ishow_orgPrice
         }));
 
-        // Gọn hóa danh sách ghế
-        // seatsRaw trong dữ liệu gốc là 2D array => cần flatten
         const seatsData = seatsRaw.flat().filter(s => s?.seatId).map(seat => ({
             seatId: seat.seatId,
             code: seat.code,
             status: seat.status,
             type: seat.type,
             price: Number(seat.price),
-            ticketTypeId: seat.ticketTypeId || seat.type, // Nếu chưa có thì tạm map theo type
+            ticketTypeId: seat.ticketTypeId || seat.type, 
             color: seat.color,
             isEnable: seat.isEnable
         }));
 
-        // Gọn hóa lưu ý thanh toán
         const paymentNote = filmData.paymentInitNote || '';
 
         res.status(200).json({
@@ -99,6 +122,52 @@ app.get('/api/films', (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Server cannot get the films data',
+            error: error.message
+        });
+    }
+});
+
+app.get('/api/films/promotion', (req, res) => {
+    try {
+        const promotions = readPromotionData();
+        if (!promotions) {
+            return res.status(500).json({
+                success: false,
+                message: 'Cannot fetch promotion data'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: promotions
+        });
+    } catch (error) {
+        console.error('Error in /api/films/promotion:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server cannot get the promotion data',
+            error: error.message
+        });
+    }
+});
+
+app.get('/api/films/food', (req, res) => {
+    try {
+        const foods = readFoodData();
+        if (!foods) {
+            return res.status(500).json({
+                success: false,
+                message: 'Cannot fetch food data'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: foods
+        });
+    } catch (error) {
+        console.error('Error in /api/films/food:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Server cannot get the food data',
             error: error.message
         });
     }

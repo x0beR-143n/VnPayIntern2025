@@ -146,6 +146,9 @@ function FilterContent() {
         setSelectedTransport(trans_arr);
 
         sessionStorage.removeItem(STORAGE_KEY);
+
+        setChangData(!changeData);
+
     };
 
     const navigate_to_search = () => {

@@ -9,7 +9,7 @@ export interface Session {
   filmNameEn: string;
   version: string;
   filmAge: string;
-  sessionTime: string; // Có thể dùng Date nếu bạn parse trước
+  sessionTime: string; 
   duration: number;
   category: string;
   poster: string;
@@ -33,6 +33,12 @@ export interface Seat {
   ticketTypeId: number;
   color: string;
   isEnable: boolean;
+}
+
+export enum SeatBookingStatus {
+  GAP_IN_MIDDLE_SEATS,
+  GAP_AT_EDGE_SEATS,
+  VALIDATED,
 }
 
 export interface ApiResponse {

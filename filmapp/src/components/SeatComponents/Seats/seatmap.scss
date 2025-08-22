@@ -1,0 +1,202 @@
+.seatmap_main_container {
+    position: relative;
+}
+
+.seats_container {
+    display: grid;
+    grid-template-columns: repeat(15, auto); /* 15 ghế/ô mỗi hàng */
+    gap: 10px;
+}
+
+.seat-wrapper {
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0px 5px 0px;
+    width: 40px;
+    cursor: pointer;
+    text {
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0;
+        color: white;
+    }
+}
+
+.seat-aisle {
+    background-color: white;
+}
+
+.seat-selected {
+  background-color: white !important;
+  border: 1px solid rgb(9, 9, 183);
+}
+
+.gaper {
+    width: 100%;
+    height: 200px;
+    margin-top: 200px;
+}
+
+.seats-info-container {
+    margin-top: 50px;
+    width: 92%;
+    padding: 30px;
+    border: 1px solid rgb(222, 222, 222);
+    border-radius: 50px 50px 0 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0px;
+}
+
+.empty-seat-container {
+    margin-top: 50px;
+    width: 92%;
+    padding: 30px;
+    border: 1px solid rgb(222, 222, 222);
+    border-radius: 50px 50px 0 0;
+    border-bottom: 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+}
+
+.empty-seat-text {
+    font-size: 25px;
+    font-weight: 600;
+    color: rgb(212, 212, 212);
+    width: 400px;;
+}
+
+.seat-available-price-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.seat-available-text {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.seat-available-original-price {
+    font-size: 20px;
+    text-decoration: line-through;
+    color: gray;
+    margin-top: -5px;
+}
+
+.seat-available-price {
+    font-size: 35px;
+    font-weight: 700;
+    color: rgb(0, 0, 186);
+    margin-top: -10px;
+}
+
+.continue-button {
+    width: fit-content;
+    height: fit-content;
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    padding: 25px 65px 25px 65px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+
+.disable-continue-button {
+    background-color: rgb(205, 205, 205);
+}
+
+.enabled-continue-button {
+    background-color: blue;
+}
+
+.seats-edit-container {
+    margin-top: 50px;
+    margin-bottom: -50px;
+    width: 92%;
+    max-height: 300px;
+    padding: 30px;
+    border: 1px solid rgb(222, 222, 222);
+    border-bottom: 0;
+    border-radius: 50px 50px 0 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    bottom: 220px;
+    max-height: 420px;
+}
+
+.seat-edit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.seat-edit-text-1 {
+    font-size: 30px;
+    font-weight: 800;
+    display: block;
+    margin-bottom: -20px;
+}
+
+.seat-edit-text-2 {
+    font-size: 23px;
+    font-weight: 500;
+    color: rgb(154, 154, 154);
+}
+
+.seat-info {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 40px;
+    row-gap: 20px;
+    max-height: 300px;
+    padding-top: 20px;
+}
+
+.seat-detail-edit {
+    display: flex;
+    flex-direction: column;
+    background-color: #f5b035;
+    width: fit-content;
+    padding: 15px 50px 15px 20px;
+    border-radius: 15px;
+    color: white;
+    position: relative;
+    height: fit-content;
+}
+
+.seat-detail-text {
+    font-weight: 500;
+    font-size: 23px;
+}
+
+.seat-detail-o-price {
+    font-size: 19px;
+    text-decoration: line-through;
+}
+
+.seat-detail-price {
+    font-size: 20px;
+    font-weight: 700;
+}   
+
+.remove-seat-ic {
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 50px;
+}

@@ -1,0 +1,25 @@
+.movie-info {
+    font-size: 23px;
+    padding: 50px;
+}
+
+.cinema {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.movie-text-1 {
+    font-weight: 650;
+    color: gray;
+}
+
+.movie-text-2 {
+    font-weight: 700;
+}
+
+.time-n-room {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 30px;
+}

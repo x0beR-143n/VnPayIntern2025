@@ -1,7 +1,7 @@
 import { View, Image, Text } from "@vnxjs/components";
 import { BsThreeDots } from "react-icons/bs";
 import { FaXmark  } from "react-icons/fa6";
-import back from '../../assets/icon/ic_back.svg'
+import back from '../../../assets/icon/ic_back.svg'
 import './header.scss'
 
 export default function Header() {

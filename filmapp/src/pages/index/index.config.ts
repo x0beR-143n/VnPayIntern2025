@@ -1,3 +1,3 @@
 export default definePageConfig({
-  navigationBarTitleText: 'Home Page'
+  navigationBarTitleText: 'Film Booking Page'
 })

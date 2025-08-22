@@ -2,7 +2,7 @@ import Vnmf from '@vnxjs/vnmf';
 import { TripApiResponseSuccess, TripApiResponseFailed } from '../interfaces/trip';
 import { TripFilter } from '../interfaces/filter';
 
-const BASE_URL = 'http://10.97.137.25:5555';
+const BASE_URL = 'http://10.97.136.159:5555';
 
 export class TripService {
   static async getTrips(

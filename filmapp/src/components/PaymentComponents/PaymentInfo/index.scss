@@ -1,0 +1,105 @@
+.payment-content {
+    margin-top: 20px;
+}
+
+.payment-content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price-header {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    text {
+        font-weight: 700;
+        font-size: 35px;
+    }
+}
+
+.payment-separator {
+    width: 100%;
+    height: 1px;
+    background-color: rgb(230, 230, 230);
+    margin-top: 30px;
+}
+
+.payment-text {
+    font-weight: 500;
+    font-size: 32px;
+}
+
+.price-detail {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.payment-ticket-price-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 20px;
+    padding-bottom: 8px;
+}
+
+.payment-ticket-type {
+    font-size: 25px;
+    font-weight: 600;
+    color: gray;
+    display: block;
+    margin-bottom: -15px;
+}
+
+.paymentticket-name {
+    font-size: 33px;
+    font-weight: 500;
+}
+
+.payment-ticket-price {
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.total-price {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.mt-50 {
+    margin-top: 50px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.total-price-des {
+    font-size: 30px;
+    color: gray;
+    font-weight: 500;
+}
+
+.total-price-detail {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.vat-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.vat-price {
+    font-weight: 700;
+    color: rgb(0, 0, 175);
+}
+
+.vat-des {
+    font-size: 25px;
+    color: gray;
+}

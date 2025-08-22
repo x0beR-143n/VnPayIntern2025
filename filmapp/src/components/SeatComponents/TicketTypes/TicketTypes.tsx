@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from '@vnxjs/components';
-import { TicketType } from '../../interfaces/seat';
-import { formatPrice } from '../../utils/format';
+import { TicketType } from '../../../interfaces/seat';
+import { formatPrice } from '../../../utils/format';
 import './ticket_types.scss';
 
 interface TicketTypesProps {

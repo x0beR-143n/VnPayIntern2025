@@ -1,0 +1,44 @@
+{
+  "code": "00",
+  "desc": "Thành công.",
+  "message": "Thành công.",
+  "coreData":
+    {
+      "code": "00",
+      "message": "Successfully",
+      "data":
+        {
+          "items":
+            [
+              {
+                "id": "4",
+                "name": "iSunday Combo",
+                "images": "https://flowerimages.vnpay.vn/vn-film/popcorn_caramel_40oz.png",
+                "price": 70000,
+                "description": "1Hotdog + 1 Nước vừa (Pepsi/ 7Up/ Mirinda Sarsi/ Mirinda Cam) + 1 snack/chip (Poca)"
+              },
+              {
+                "id": "3",
+                "name": "iMega Combo",
+                "images": "https://flowerimages.vnpay.vn/vn-film/popcorn_caramel_40oz.png",
+                "price": 72000,
+                "description": "1 Bắp vừa (Ngọt/ Caramel) + 1 Nước vừa (Pepsi/ 7Up/ Mirinda Sarsi/ Mirinda Cam) + 1 snack/chip (Poca..."
+              },
+              {
+                "id": "1",
+                "name": "iAquafina ",
+                "images": "https://flowerimages.vnpay.vn/vn-film/popcorn_caramel_40oz.png",
+                "price": 127000,
+                "description": "Aquafina 335ml"
+              },
+              {
+                "id": "2",
+                "name": "iCouple Combo",
+                "images": "https://flowerimages.vnpay.vn/vn-film/popcorn_caramel_40oz.png",
+                "price": 127000,
+                "description": "2 Bắp vừa (Ngọt/ Caramel) + 2 Nước vừa (Pepsi/ 7Up/ Mirinda Sarsi/ Mirinda Cam) + 1 snack/chip (Poca..."
+              }
+            ]
+        }
+    }
+}
