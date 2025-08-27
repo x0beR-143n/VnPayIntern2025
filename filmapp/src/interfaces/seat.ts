@@ -41,6 +41,11 @@ export enum SeatBookingStatus {
   VALIDATED,
 }
 
+export interface SeatBookingValidation {
+  status: SeatBookingStatus;
+  error_index: number;
+}
+
 export interface ApiResponse {
   success: boolean;
   session: Session;

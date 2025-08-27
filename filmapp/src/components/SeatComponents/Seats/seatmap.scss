@@ -1,11 +1,21 @@
 .seatmap_main_container {
     position: relative;
+    height:  1000px;
+    //height:  63vh;
 }
 
 .seats_container {
     display: grid;
     grid-template-columns: repeat(15, auto); /* 15 ghế/ô mỗi hàng */
-    gap: 10px;
+    gap: 7px;
+}
+
+.seat-container-max-h-1 {
+    height: 500px;
+}
+
+.seat-container-max-h-2 {
+    height: 350px;
 }
 
 .seat-wrapper {
@@ -33,14 +43,7 @@
   border: 1px solid rgb(9, 9, 183);
 }
 
-.gaper {
-    width: 100%;
-    height: 200px;
-    margin-top: 200px;
-}
-
 .seats-info-container {
-    margin-top: 50px;
     width: 92%;
     padding: 30px;
     border: 1px solid rgb(222, 222, 222);
@@ -51,7 +54,7 @@
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    bottom: 0px;
+    bottom: -12px;
 }
 
 .empty-seat-container {
@@ -130,7 +133,7 @@
     padding: 30px;
     border: 1px solid rgb(222, 222, 222);
     border-bottom: 0;
-    border-radius: 50px 50px 0 0;
+    border-radius: 50px 50px 15px 15px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
     position: absolute;
@@ -158,13 +161,13 @@
 }
 
 .seat-info {
-    margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     column-gap: 40px;
     row-gap: 20px;
     max-height: 300px;
     padding-top: 20px;
+    padding-left: 10px;
 }
 
 .seat-detail-edit {
@@ -199,4 +202,17 @@
     right: -20px;
     top: -20px;
     width: 50px;
+}
+
+@keyframes spring-bounce {
+  0%   { transform: scale(1); }
+  20%  { transform: scale(1.4); }
+  40%  { transform: scale(1); }
+  60%  { transform: scale(1.4); }
+  80%  { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+
+.seat-bounce {
+  animation: spring-bounce 1.4s ease-in-out; /* đàn hồi mềm mại */
 }

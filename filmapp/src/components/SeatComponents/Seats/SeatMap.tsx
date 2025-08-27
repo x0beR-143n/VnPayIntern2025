@@ -4,7 +4,7 @@ import { View, Text, Image, ScrollView } from '@vnxjs/components';
 import { useDispatch } from 'react-redux';
 import { setFilmSession } from '../../../store/slices/filmSlice'; 
 import './seatmap.scss';
-import { Seat, SeatBookingStatus, Session } from '../../../interfaces/seat';
+import { Seat, SeatBookingStatus, Session, SeatBookingValidation } from '../../../interfaces/seat';
 import selected_seat from '../../../assets/icon/ic_seat_selected_path.svg';
 import { formatDateTime, formatPrice } from '../../../utils/format';
 import { validateBookingSeats } from '../../../utils/seat';
@@ -21,6 +21,7 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
   const [showSeatEditor, setSeatEditor] = useState(false)
   const [selectNormalSeat, setSelectNormalSeat] = useState(false);
+  const [errorSeatIndex, setErrorSeatIndex] = useState(-1);
 
   const dispatch = useDispatch();
 
@@ -68,8 +69,8 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
   }
 
   const handleContinue = () => {
-    let validationResult = validateBookingSeats(seats, selectedSeats);
-    if (validationResult === SeatBookingStatus.VALIDATED) {
+    let validationResult:SeatBookingValidation = validateBookingSeats(seats, selectedSeats);
+    if (validationResult.status === SeatBookingStatus.VALIDATED) {
       // Validate Thành Công
       const seatID = getSelectedSeatID();
       const data = {
@@ -89,7 +90,9 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
       })
     } else {
       let errorMessage = 'Đã xảy ra lỗi khi đặt vé. Vui lòng kiểm tra lại.'; // Thông báo mặc định
-      switch (validationResult) {
+      setTimeout(() => {setErrorSeatIndex(validationResult.error_index)}, 2000)
+      setTimeout(() => {setErrorSeatIndex(-1)}, 4000)
+      switch (validationResult.status) {
         case SeatBookingStatus.GAP_IN_MIDDLE_SEATS:
           errorMessage = 'Không được bỏ trống ghế ở giữa, trừ khi cách 2 ghế. Vui lòng chọn ghế liên tục hoặc cách 2 ghế';
           break;
@@ -107,7 +110,15 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
 
   return (
     <View className='seatmap_main_container'>
-      <View className='seats_container'>
+      <ScrollView className={`seats_container ${
+                    !showSeatEditor || selectedSeats.length === 0
+                      ? ""
+                      : selectedSeats.length <= 3
+                      ? "seat-container-max-h-1"
+                      : "seat-container-max-h-2"
+                  }`}
+        scrollY scrollWithAnimation
+      >
         {seats.map((seat, index) => {
           if (!seat.code) {
             return (
@@ -115,11 +126,11 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
                 key={index}
                 className='seat-aisle seat-wrapper'
               >
-                  <Text>A001</Text>
+                  <Text>A01</Text>
               </View>
             )
           }
-
+          
           const isSelected = selectedSeats.includes(index);
           let disabled = false;
           if(selectedSeats.length !== 0) {
@@ -139,7 +150,7 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
             return (
               <View
                 key={index}
-                className={`seat-wrapper ${isSelected ? 'seat-selected' : ''}`}
+                className={`seat-wrapper ${isSelected ? 'seat-selected' : ''} ${errorSeatIndex === index ? 'seat-bounce' : ''}`}
                 style={!isSelected ? `background-color: ${seat.color}` : ''}
                 onClick={() => handleSeatChose(index)}
               >
@@ -163,8 +174,7 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
           }
           
         })}
-      </View>
-      <View class='gaper'></View>
+      </ScrollView>
       {selectedSeats.length > 0 && (
         <View className='seats-edit-container'>
           <View className='seat-edit'>

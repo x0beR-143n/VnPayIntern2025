@@ -3,7 +3,7 @@ import { ApiResponse } from '../interfaces/seat';
 import { FoodApiResponse } from '../interfaces/food';
 import { PromotionApiResponse } from '../interfaces/promotion';
 
-const BASE_URL = 'http://10.97.136.159:5555';
+const BASE_URL = 'http://172.20.10.2:5555';
 
 export class FilmService {
   static async getFilmSession(): Promise<ApiResponse> {

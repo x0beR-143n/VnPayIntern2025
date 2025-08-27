@@ -216,17 +216,19 @@ function FilterContent() {
                 <View className='filter-body-items'>
                     <Text className='filter-title-text'>Khoảng giá</Text>
                     <Text className='max_price'>Lựa chọn khoảng giá của bạn: <Text>{formatCurrencyVND(priceRange[0])}</Text> - <Text>{formatCurrencyVND(priceRange[1])}</Text></Text>
-                    <Slider
-                      range
-                      min={100000}
-                      max={900000}
-                      value={priceRange}
-                      onChange={(val) => {
-                        setPriceRange(val);
-                        saveFilterToStorage(selected_hour, val[0], val[1], selected_merchant, selected_transport);
-                        setChangData(!changeData);
-                      }}
-                    />
+                    <View className='slider-card'>
+                        <Slider
+                          range
+                          min={100000}
+                          max={900000}
+                          value={priceRange}
+                          onChange={(val) => {
+                            setPriceRange(val);
+                            saveFilterToStorage(selected_hour, val[0], val[1], selected_merchant, selected_transport);
+                            setChangData(!changeData);
+                        }}
+                        />
+                    </View> 
                 </View>
                 <View className='filter-body-items'>
                     <Text className='filter-title-text'>Nhà xe</Text>
