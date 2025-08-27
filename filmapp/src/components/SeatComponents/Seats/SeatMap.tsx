@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Vnmf from '@vnxjs/vnmf';
 import { View, Text, Image, ScrollView } from '@vnxjs/components';
 import { useDispatch } from 'react-redux';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { setFilmSession } from '../../../store/slices/filmSlice'; 
 import './seatmap.scss';
 import { Seat, SeatBookingStatus, Session, SeatBookingValidation } from '../../../interfaces/seat';
@@ -110,71 +111,82 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
 
   return (
     <View className='seatmap_main_container'>
-      <ScrollView className={`seats_container ${
-                    !showSeatEditor || selectedSeats.length === 0
-                      ? ""
-                      : selectedSeats.length <= 3
-                      ? "seat-container-max-h-1"
-                      : "seat-container-max-h-2"
-                  }`}
-        scrollY scrollWithAnimation
+      <TransformWrapper
+        initialScale={1}
+        minScale={1}
+        maxScale={3}
+        centerOnInit // căn giữa khi mới khởi tạo
+        panning={{ disabled: true }}
+        wheel={{ disabled: true }} // tắt zoom bằng chuột, chỉ cho pinch bằng tay
       >
-        {seats.map((seat, index) => {
-          if (!seat.code) {
-            return (
-              <View
-                key={index}
-                className='seat-aisle seat-wrapper'
-              >
-                  <Text>A01</Text>
-              </View>
-            )
-          }
-          
-          const isSelected = selectedSeats.includes(index);
-          let disabled = false;
-          if(selectedSeats.length !== 0) {
-            if(seat.ticketTypeId === 0) {
-              if(!selectNormalSeat) {
-                disabled = true;
+        <TransformComponent>
+          <ScrollView className={`seats_container ${
+                        !showSeatEditor || selectedSeats.length === 0
+                          ? ""
+                          : selectedSeats.length <= 3
+                          ? "seat-container-max-h-1"
+                          : "seat-container-max-h-2"
+                      }`}
+            scrollY scrollWithAnimation
+          >
+            {seats.map((seat, index) => {
+              if (!seat.code) {
+                return (
+                  <View
+                    key={index}
+                    className='seat-aisle seat-wrapper'
+                  >
+                      <Text>A01</Text>
+                  </View>
+                )
               }
-            }
-            if(seat.ticketTypeId === 1) {
-              if(selectNormalSeat) {
-                disabled = true;
+              
+              const isSelected = selectedSeats.includes(index);
+              let disabled = false;
+              if(selectedSeats.length !== 0) {
+                if(seat.ticketTypeId === 0) {
+                  if(!selectNormalSeat) {
+                    disabled = true;
+                  }
+                }
+                if(seat.ticketTypeId === 1) {
+                  if(selectNormalSeat) {
+                    disabled = true;
+                  }
+                }
               }
-            }
-          }
 
-          if(!disabled) {
-            return (
-              <View
-                key={index}
-                className={`seat-wrapper ${isSelected ? 'seat-selected' : ''} ${errorSeatIndex === index ? 'seat-bounce' : ''}`}
-                style={!isSelected ? `background-color: ${seat.color}` : ''}
-                onClick={() => handleSeatChose(index)}
-              >
-                {isSelected ? (
-                  <Image src={selected_seat} />
-                ) : (
-                  <Text>{seat.code}</Text>
-                )}
-              </View>
-            );
-          } else {
-              return (
-                <View
-                  key={index}
-                  className='seat-wrapper'
-                  style={`background-color: ${seat.color}; opacity: 0.3`}
-                >
-                  <Text>{seat.code}</Text>
-                </View>
-              );
-          }
-          
-        })}
-      </ScrollView>
+              if(!disabled) {
+                return (
+                  <View
+                    key={index}
+                    className={`seat-wrapper ${isSelected ? 'seat-selected' : ''} ${errorSeatIndex === index ? 'seat-bounce' : ''}`}
+                    style={!isSelected ? `background-color: ${seat.color}` : ''}
+                    onClick={() => handleSeatChose(index)}
+                  >
+                    {isSelected ? (
+                      <Image src={selected_seat} />
+                    ) : (
+                      <Text>{seat.code}</Text>
+                    )}
+                  </View>
+                );
+              } else {
+                  return (
+                    <View
+                      key={index}
+                      className='seat-wrapper'
+                      style={`background-color: ${seat.color}; opacity: 0.3`}
+                    >
+                      <Text>{seat.code}</Text>
+                    </View>
+                  );
+              }
+              
+            })}
+          </ScrollView>
+        </TransformComponent>
+      </TransformWrapper>
       {selectedSeats.length > 0 && (
         <View className='seats-edit-container'>
           <View className='seat-edit'>

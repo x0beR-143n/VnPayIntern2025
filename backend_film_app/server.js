@@ -153,7 +153,8 @@ app.get('/api/films/promotion', (req, res) => {
 app.get('/api/films/food', (req, res) => {
     try {
         const foods = readFoodData();
-        if (!foods) {
+        const film = readFilmData();
+        if (!foods || !film) {
             return res.status(500).json({
                 success: false,
                 message: 'Cannot fetch food data'
@@ -161,7 +162,8 @@ app.get('/api/films/food', (req, res) => {
         }
         res.status(200).json({
             success: true,
-            data: foods
+            data: foods,
+            maxConcessions: film.maxConcessions,
         });
     } catch (error) {
         console.error('Error in /api/films/food:', error);

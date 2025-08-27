@@ -9,4 +9,5 @@ export interface Food {
 export interface FoodApiResponse {
     success: boolean;
     data: Food[];
+    maxConcessions: number;
 }
