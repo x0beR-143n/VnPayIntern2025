@@ -42,8 +42,10 @@ export enum SeatBookingStatus {
 }
 
 export interface SeatBookingValidation {
-  status: SeatBookingStatus;
-  error_index: number;
+  GAP_IN_MIDDLE_SEATS: boolean,
+  GAP_AT_EDGE_SEATS : boolean,
+  VALIDATED : boolean,
+  error_index: number[];
 }
 
 export interface ApiResponse {

@@ -11,18 +11,37 @@ import './fooditem.scss'
 
 interface FoodItemProps {
     foodData: Food[];
+    maxConcession: number;
 }
 
-export default function FoodItem ({foodData} : FoodItemProps) {    
+export default function FoodItem ({foodData, maxConcession} : FoodItemProps) {    
     const [count, setCount] = useState<number[]>(new Array(foodData.length).fill(0));
     const dispatch = useDispatch();
 
+    const validateConcession = (arr: number[]) => {
+        let sum = 0;
+        arr.forEach(c => {
+            sum += c;
+        })
+        if(sum > maxConcession) {
+            return false;
+        }
+        return true;
+    }
+
     const increaseCount = (index) => {  
-        setCount(prevCount => {
-            const newCount = [...prevCount];
-            newCount[index]++;
-            return newCount;
-        });
+        const newCount = [...count];
+        newCount[index]++;
+        const result = validateConcession(newCount);
+        if(result) {
+            setCount(newCount);
+        } else {
+            Vnmf.showToast({
+                title: "Bạn không thể đặt quá " + maxConcession + " suất combo ăn/uống",
+                icon: 'error',
+                duration: 1500
+            });
+        }
     }
 
     const minusCount = (index) => {

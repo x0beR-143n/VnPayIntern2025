@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { setFilmSession } from '../../../store/slices/filmSlice'; 
 import './seatmap.scss';
-import { Seat, SeatBookingStatus, Session, SeatBookingValidation } from '../../../interfaces/seat';
+import { Seat, Session, SeatBookingValidation } from '../../../interfaces/seat';
 import selected_seat from '../../../assets/icon/ic_seat_selected_path.svg';
 import { formatDateTime, formatPrice } from '../../../utils/format';
 import { validateBookingSeats } from '../../../utils/seat';
@@ -22,7 +22,7 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
   const [showSeatEditor, setSeatEditor] = useState(false)
   const [selectNormalSeat, setSelectNormalSeat] = useState(false);
-  const [errorSeatIndex, setErrorSeatIndex] = useState(-1);
+  const [errorSeatIndex, setErrorSeatIndex] = useState<number[]>([]);
 
   const dispatch = useDispatch();
 
@@ -71,7 +71,7 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
 
   const handleContinue = () => {
     let validationResult:SeatBookingValidation = validateBookingSeats(seats, selectedSeats);
-    if (validationResult.status === SeatBookingStatus.VALIDATED) {
+    if (validationResult.VALIDATED) {
       // Validate Thành Công
       const seatID = getSelectedSeatID();
       const data = {
@@ -90,19 +90,21 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
         url: 'pages/food/index'
       })
     } else {
-      let errorMessage = 'Đã xảy ra lỗi khi đặt vé. Vui lòng kiểm tra lại.'; // Thông báo mặc định
-      setTimeout(() => {setErrorSeatIndex(validationResult.error_index)}, 2000)
-      setTimeout(() => {setErrorSeatIndex(-1)}, 4000)
-      switch (validationResult.status) {
-        case SeatBookingStatus.GAP_IN_MIDDLE_SEATS:
-          errorMessage = 'Không được bỏ trống ghế ở giữa, trừ khi cách 2 ghế. Vui lòng chọn ghế liên tục hoặc cách 2 ghế';
-          break;
-        case SeatBookingStatus.GAP_AT_EDGE_SEATS:
-          errorMessage = 'Không được bỏ trống ghế ở ngoài cùng.';
-          break;
+      setTimeout(() => {setErrorSeatIndex(validationResult.error_index)}, 2000);
+      setTimeout(() => {setErrorSeatIndex([])}, 4000);
+      let errorMessage = "Đã xảy ra lỗi khi đặt ghế";
+      if(validationResult.GAP_AT_EDGE_SEATS && validationResult.GAP_IN_MIDDLE_SEATS) {
+        errorMessage = "Không được bỏ trống ghế ở giữa và ở ngoài cùng. Vui lòng chọn lại!";
+      } else {
+        if(validationResult.GAP_AT_EDGE_SEATS) {
+          errorMessage = "Không được bỏ trống ghế ở ngoài cùng. Vui lòng chọn lại!";
+        }
+        if(validationResult.GAP_IN_MIDDLE_SEATS) {
+          errorMessage = "Không được bỏ trống ghế ở giữa trừ khi có 2 ghế trống trở lên. Vui lòng chọn lại!";
+        }
       }
       Vnmf.showToast({
-        title: errorMessage, // Sử dụng thông báo lỗi cụ thể
+        title: errorMessage,
         icon: 'error',
         duration: 2000
       });
@@ -128,7 +130,7 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
                           : "seat-container-max-h-2"
                       }`}
             scrollY scrollWithAnimation
-          >
+          > 
             {seats.map((seat, index) => {
               if (!seat.code) {
                 return (
@@ -160,7 +162,7 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
                 return (
                   <View
                     key={index}
-                    className={`seat-wrapper ${isSelected ? 'seat-selected' : ''} ${errorSeatIndex === index ? 'seat-bounce' : ''}`}
+                    className={`seat-wrapper ${isSelected ? 'seat-selected' : ''} ${errorSeatIndex.includes(index) ? 'seat-bounce' : ''}`}
                     style={!isSelected ? `background-color: ${seat.color}` : ''}
                     onClick={() => handleSeatChose(index)}
                   >

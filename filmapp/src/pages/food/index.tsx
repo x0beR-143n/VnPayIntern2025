@@ -13,6 +13,7 @@ import './index.scss'
 
 function FoodIndex() {
     const [foodData, setFoodData] = useState<Food[]>([]);
+    const [maxConcession, setConcession] = useState(Infinity);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -21,6 +22,7 @@ function FoodIndex() {
             try {
                 const data = await FilmService.getFoodSession();                
                 setFoodData(data.data);
+                setConcession(data.maxConcessions)
             } catch (err: any) {
                 setError(err.message || 'Có lỗi xảy ra');
             } finally {
@@ -42,7 +44,7 @@ function FoodIndex() {
     return (
         <View>
             <FoodHeader />
-            <FoodItem foodData={foodData} />
+            <FoodItem foodData={foodData} maxConcession={maxConcession} />
         </View>
     )
 }
