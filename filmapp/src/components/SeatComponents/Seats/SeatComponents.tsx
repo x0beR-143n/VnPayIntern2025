@@ -11,7 +11,7 @@ interface SeatProps {
   selectedSeatIcon: string;
 }
 
-const Seat = memo(({ index, seat, isSelected, isError, disabled, onSelect, selectedSeatIcon }: SeatProps) => {
+const SeatComponent = memo(({ index, seat, isSelected, isError, disabled, onSelect, selectedSeatIcon }: SeatProps) => {
   if (!seat.code) {
     return (
       <View key={index} className='seat-aisle seat-wrapper'>
@@ -50,4 +50,4 @@ const Seat = memo(({ index, seat, isSelected, isError, disabled, onSelect, selec
   );
 });
 
-export default Seat;
+export default SeatComponent;

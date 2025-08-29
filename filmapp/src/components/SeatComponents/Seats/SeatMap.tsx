@@ -12,6 +12,7 @@ import { validateBookingSeats } from '../../../utils/seat';
 import drop_down from '../../../assets/icon/ic_dropdown_down.svg';
 import drop_up from '../../../assets/icon/ic_dropdown_up.svg';
 import cancel_seat from '../../../assets/icon/ic_remove_seat.svg'
+import SeatComponent from './SeatComponents';
 
 interface SeatMapProp {
   seats: Seat[];
@@ -132,59 +133,27 @@ export default function SeatMap({ seats, session }: SeatMapProp) {
             scrollY scrollWithAnimation
           > 
             {seats.map((seat, index) => {
-              if (!seat.code) {
-                return (
-                  <View
-                    key={index}
-                    className='seat-aisle seat-wrapper'
-                  >
-                      <Text>A01</Text>
-                  </View>
-                )
-              }
-              
               const isSelected = selectedSeats.includes(index);
+              const isError = errorSeatIndex.includes(index);
+
               let disabled = false;
-              if(selectedSeats.length !== 0) {
-                if(seat.ticketTypeId === 0) {
-                  if(!selectNormalSeat) {
-                    disabled = true;
-                  }
-                }
-                if(seat.ticketTypeId === 1) {
-                  if(selectNormalSeat) {
-                    disabled = true;
-                  }
-                }
+              if (selectedSeats.length !== 0) {
+                if (seat.ticketTypeId === 0 && !selectNormalSeat) disabled = true;
+                if (seat.ticketTypeId === 1 && selectNormalSeat) disabled = true;
               }
 
-              if(!disabled) {
-                return (
-                  <View
-                    key={index}
-                    className={`seat-wrapper ${isSelected ? 'seat-selected' : ''} ${errorSeatIndex.includes(index) ? 'seat-bounce' : ''}`}
-                    style={!isSelected ? `background-color: ${seat.color}` : ''}
-                    onClick={() => handleSeatChose(index)}
-                  >
-                    {isSelected ? (
-                      <Image src={selected_seat} />
-                    ) : (
-                      <Text>{seat.code}</Text>
-                    )}
-                  </View>
-                );
-              } else {
-                  return (
-                    <View
-                      key={index}
-                      className='seat-wrapper'
-                      style={`background-color: ${seat.color}; opacity: 0.3`}
-                    >
-                      <Text>{seat.code}</Text>
-                    </View>
-                  );
-              }
-              
+              return (
+                <SeatComponent
+                  key={index}
+                  index={index}
+                  seat={seat}
+                  isSelected={isSelected}
+                  isError={isError}
+                  disabled={disabled}
+                  onSelect={handleSeatChose}
+                  selectedSeatIcon={selected_seat}
+                />
+              );
             })}
           </ScrollView>
         </TransformComponent>
