@@ -8,18 +8,26 @@ export const validateBookingSeats = (seats: Seat[], selectedIndex: number[]): Se
         error_index: [],
     }
     for(const index of selectedIndex) {
-        if(seats[index].code.includes('12')) {
-            if(!selectedIndex.includes(index +1)) {
-                result.GAP_AT_EDGE_SEATS = true;
-                result.VALIDATED = false;
-                result.error_index.push(index + 1);
+        if(seats[index-1].code.length === 0) {
+            if(!selectedIndex.includes(index + 1)) {
+                const currentSeatCode = seats[index].code[0];
+                const validateSeatCode = seats[index + 2].code[0];
+                if(currentSeatCode !== validateSeatCode) {
+                    result.GAP_AT_EDGE_SEATS = true;
+                    result.VALIDATED = false;
+                    result.error_index.push(index + 1);
+                }
             }
         }
-         if(seats[index].code.includes('02')) {
+        if(seats[index+1].code.length === 0) {
             if(!selectedIndex.includes(index - 1)) {
-                result.GAP_AT_EDGE_SEATS = true;
-                result.VALIDATED = false;
-                result.error_index.push(index - 1);
+                const currentSeatCode = seats[index].code[0];
+                const validateSeatCode = seats[index - 2].code[0];
+                if(currentSeatCode !== validateSeatCode) {
+                    result.GAP_AT_EDGE_SEATS = true;
+                    result.VALIDATED = false;
+                    result.error_index.push(index - 1);
+                }
             }
         }
     }
